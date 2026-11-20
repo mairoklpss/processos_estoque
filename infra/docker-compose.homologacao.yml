@@ -1,0 +1,25 @@
+name: brasilink-homologacao
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: brasilink_homologacao
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PG_LOCAL_PASSWORD:?Defina PG_LOCAL_PASSWORD no ambiente de execução}
+      PGDATA: /var/lib/postgresql/18/docker
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - postgres_homologacao:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d brasilink_homologacao"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    shm_size: 128mb
+    mem_limit: 768m
+volumes:
+  postgres_homologacao:

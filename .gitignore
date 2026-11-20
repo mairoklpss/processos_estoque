@@ -6,3 +6,11 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Bancos locais; não remove arquivos já rastreados
+data/*.sqlite*
+
+# Dados de homologação, backups e segredos locais não são entregáveis públicos
+.local/
+backups/
+*.backup.enc

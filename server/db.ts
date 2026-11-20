@@ -23,7 +23,7 @@ export function verifyPassword(password: string, storedHash: string): boolean {
 
 export function createDatabase(dbPath?: string): DBInstance {
   const resolvedPath =
-    dbPath ?? path.resolve(process.cwd(), 'data', 'brasilink_separacao.sqlite');
+    dbPath ?? process.env.SQLITE_PATH ?? path.resolve(process.cwd(), 'data', 'brasilink_separacao.sqlite');
 
   if (resolvedPath !== ':memory:') {
     const dir = path.dirname(resolvedPath);
@@ -60,6 +60,18 @@ function initSchema(db: DBInstance): void {
       criado_em TEXT NOT NULL,
       expira_em TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS audit_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      criado_em TEXT NOT NULL,
+      actor_id INTEGER,
+      evento TEXT NOT NULL,
+      metodo TEXT NOT NULL,
+      rota TEXT NOT NULL,
+      status INTEGER NOT NULL,
+      ip_hash TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_audit_criado ON audit_logs(criado_em);
 
     CREATE TABLE IF NOT EXISTS tecnicos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,6 +1,6 @@
 import { AlertTriangle, KeyRound, Plus, Save, Trash2, UserCheck, UserX } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
-import { api, ApiError } from '../lib/api.ts';
+import { api, ApiError, buildItemUpdatePayload } from '../lib/api.ts';
 import type {
   ItemProduto,
   ParametroTecnicoItem,
@@ -33,6 +33,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
   const [itemNome, setItemNome] = useState('');
   const [itemUnidade, setItemUnidade] = useState('un');
   const [itemEstoque, setItemEstoque] = useState('0');
+  const [itemEstoqueOriginal, setItemEstoqueOriginal] = useState<number | null>(null);
   const [itemMaximo, setItemMaximo] = useState('10');
 
   // Parâmetros por técnico
@@ -143,7 +144,8 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
         limiteMaximo: Number(itemMaximo),
       };
       if (itemEditId) {
-        await api.atualizarItem(itemEditId, payload);
+        if (itemEstoqueOriginal === null) throw new ApiError(409,'Reabra o produto antes de salvar.');
+        await api.atualizarItem(itemEditId, buildItemUpdatePayload(payload,itemEstoqueOriginal));
         onNotify('Produto atualizado.');
       } else {
         await api.criarItem(payload);
@@ -154,6 +156,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
       setItemNome('');
       setItemUnidade('un');
       setItemEstoque('0');
+      setItemEstoqueOriginal(null);
       setItemMaximo('10');
       await loadAll();
       onRefreshSummary();
@@ -485,6 +488,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                     setItemNome('');
                     setItemUnidade('un');
                     setItemEstoque('0');
+                    setItemEstoqueOriginal(null);
                     setItemMaximo('10');
                   }}
                   className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
@@ -534,6 +538,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                           setItemNome(item.nome);
                           setItemUnidade(item.unidade);
                           setItemEstoque(String(item.estoqueAtual));
+                          setItemEstoqueOriginal(item.estoqueAtual);
                           setItemMaximo(String(item.limiteMaximo));
                         }}
                         className="text-xs font-medium text-[#0F4C81] hover:underline cursor-pointer"
@@ -693,12 +698,12 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
               </div>
               <div>
                 <label htmlFor="usr-senha" className="block text-xs font-medium text-slate-700 mb-1">
-                  Senha inicial (mín. 6)
+                  Senha inicial (mín. 12)
                 </label>
                 <input
                   id="usr-senha"
                   type="password"
-                  minLength={6}
+                  minLength={12}
                   required
                   value={usrPassword}
                   onChange={(e) => setUsrPassword(e.target.value)}
@@ -741,11 +746,11 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                 <input
                   id="nova-senha"
                   type="password"
-                  minLength={6}
+                  minLength={12}
                   required
                   value={resetPass}
                   onChange={(e) => setResetPass(e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Mínimo 12 caracteres"
                   className="w-full h-9 px-3 text-sm bg-white border border-amber-300 rounded-md"
                 />
               </div>

@@ -21,7 +21,6 @@ export interface UsuarioPublico {
 export interface AuthSessionResponse {
   user: Pick<UsuarioPublico, 'id' | 'nome' | 'username' | 'perfil'>;
   ambiente: string;
-  token?: string;
 }
 
 export interface Tecnico {

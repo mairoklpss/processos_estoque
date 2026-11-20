@@ -4,17 +4,17 @@ import fs from 'fs';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { createApp } from './server/app.ts';
-import { createDatabase, seedDatabaseIfEmpty } from './server/db.ts';
+import { openRuntimeDatabase, purgeExpiredRuntimeSessions } from './server/database-config.ts';
 
 async function startServer() {
-  const db = createDatabase();
-  seedDatabaseIfEmpty(db);
-
+  const { db } = await openRuntimeDatabase();
+  await purgeExpiredRuntimeSessions(db);
   const app = createApp(db);
   const port = Number(process.env.PORT ?? 3000);
   const isProd = process.env.NODE_ENV === 'production';
+  const staticFrontend = isProd || process.env.APP_LOCAL_STATIC === 'true';
 
-  if (isProd) {
+  if (staticFrontend) {
     const distDir = path.resolve(process.cwd(), 'dist');
     app.use(express.static(distDir));
     app.get('*', (req, res, next) => {
@@ -41,12 +41,24 @@ async function startServer() {
     });
   }
 
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`Brasilink Separação de Materiais ouvindo em http://0.0.0.0:${port}`);
+  const host = process.env.HOST ?? (isProd ? '0.0.0.0' : '127.0.0.1');
+  const maintenance = setInterval(() => { void purgeExpiredRuntimeSessions(db).catch(() => console.error('SESSION_PURGE_FAILED')); }, 3600000);
+  maintenance.unref();
+  const server = app.listen(port, host, () => {
+    console.log(`Brasilink Separação de Materiais ouvindo em http://${host}:${port}`);
   });
+  let stopping = false;
+  const stop = () => {
+    if (stopping) return; stopping = true; clearInterval(maintenance);
+    server.close(() => { void db.close().then(() => process.exit(0)).catch(() => process.exit(1)); });
+  };
+  process.once('SIGINT', stop); process.once('SIGTERM', stop);
 }
 
 startServer().catch((err) => {
-  console.error('Falha ao iniciar servidor:', err);
+  let message = err instanceof Error ? err.message : 'Falha de configuração';
+  message = message.replace(/postgres(?:ql)?:\/\/\S+/gi, '[conexão omitida]');
+  for (const secret of [process.env.DATABASE_URL, process.env.BACKUP_PASSPHRASE]) if (secret) message = message.replaceAll(secret, '[omitido]');
+  console.error('Falha ao iniciar servidor:', message);
   process.exit(1);
 });

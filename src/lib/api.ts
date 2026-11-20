@@ -24,28 +24,6 @@ export class ApiError extends Error {
   }
 }
 
-const SESSION_TOKEN_KEY = 'brasilink_session_token';
-
-function getStoredToken(): string | null {
-  try {
-    return window.sessionStorage.getItem(SESSION_TOKEN_KEY);
-  } catch {
-    return null;
-  }
-}
-
-function setStoredToken(token: string | null): void {
-  try {
-    if (token) {
-      window.sessionStorage.setItem(SESSION_TOKEN_KEY, token);
-    } else {
-      window.sessionStorage.removeItem(SESSION_TOKEN_KEY);
-    }
-  } catch {
-    // Ignorar se sessionStorage estiver indisponível
-  }
-}
-
 let sessionExpiredHandler: (() => void) | null = null;
 
 export function setOnSessionExpired(cb: () => void): void {
@@ -53,14 +31,11 @@ export function setOnSessionExpired(cb: () => void): void {
 }
 
 async function request<T>(url: string, options?: RequestInit & { suppressExpiredNotice?: boolean }): Promise<T> {
-  const token = getStoredToken();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
+    'X-Requested-With': 'Brasilink',
     ...((options?.headers as Record<string, string>) ?? {}),
   };
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
 
   const res = await fetch(url, {
     credentials: 'include',
@@ -77,7 +52,6 @@ async function request<T>(url: string, options?: RequestInit & { suppressExpired
       !url.includes('/api/auth/login') &&
       !options?.suppressExpiredNotice
     ) {
-      setStoredToken(null);
       if (sessionExpiredHandler) {
         sessionExpiredHandler();
       }
@@ -90,6 +64,47 @@ async function request<T>(url: string, options?: RequestInit & { suppressExpired
   }
 
   return body as T;
+}
+
+export async function requestAllPages<T extends { id: number }>(url: string): Promise<T[]> {
+  const [pathname, query = ''] = url.split('?');
+  const params = new URLSearchParams(query);
+  const limit = 500;
+  const maximum = 10000;
+  const rows: T[] = [];
+  const seen = new Set<number>();
+  // One extra page distinguishes exactly 10,000 records from an oversized list.
+  for (let offset = 0; offset <= maximum; offset += limit) {
+    params.set('limit', String(limit));
+    params.set('offset', String(offset));
+    const page = await request<T[]>(`${pathname}?${params}`);
+    if (!Array.isArray(page) || page.length > limit) {
+      throw new ApiError(502, 'Resposta de paginação inválida.', 'INVALID_PAGE');
+    }
+    for (const row of page) {
+      if (!row || !Number.isInteger(row.id) || row.id <= 0) {
+        throw new ApiError(502, 'Registro de paginação inválido.', 'INVALID_PAGE');
+      }
+      if (seen.has(row.id)) {
+        throw new ApiError(409, 'A lista mudou durante o carregamento. Atualize novamente.', 'UNSTABLE_PAGINATION');
+      }
+      seen.add(row.id);
+      rows.push(row);
+    }
+    if (rows.length > maximum) break;
+    if (page.length < limit) return rows;
+  }
+  throw new ApiError(413, 'A lista excede 10 mil registros. Refine filtros ou solicite paginação por demanda.', 'PAGINATION_LIMIT');
+}
+
+export function buildItemUpdatePayload(
+  data: { codigo: string; nome: string; unidade: string; estoqueAtual: number; limiteMaximo: number },
+  expectedEstoqueAtual: number
+) {
+  const { estoqueAtual, ...metadata } = data;
+  return estoqueAtual === expectedEstoqueAtual
+    ? metadata
+    : { ...metadata, estoqueAtual, expectedEstoqueAtual };
 }
 
 export function formatDateTimeSP(iso: string | null | undefined): string {
@@ -113,35 +128,21 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
-    if (data.token) {
-      setStoredToken(data.token);
-    }
     return data;
   },
-  logout: async () => {
-    try {
-      return await request<{ ok: boolean }>('/api/auth/logout', {
-        method: 'POST',
-        suppressExpiredNotice: true,
-      });
-    } finally {
-      setStoredToken(null);
-    }
-  },
+  logout: () => request<{ ok: boolean }>('/api/auth/logout', { method: 'POST', suppressExpiredNotice: true }),
   me: () =>
     request<AuthSessionResponse>('/api/auth/me', {
       suppressExpiredNotice: true,
     }),
 
   downloadCsv: async (url: string, filename: string) => {
-    const token = getStoredToken();
     const res = await fetch(url, {
       credentials: 'include',
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      headers: {},
     });
     if (!res.ok) {
       if (res.status === 401 && sessionExpiredHandler) {
-        setStoredToken(null);
         sessionExpiredHandler();
       }
       throw new ApiError(res.status, 'Não foi possível exportar o arquivo CSV.');
@@ -161,14 +162,14 @@ export const api = {
   getSummary: () => request<DashboardSummaryDTO>('/api/coord/summary'),
 
   // Coordenador - Técnicos
-  listarTecnicos: () => request<Tecnico[]>('/api/coord/tecnicos'),
+  listarTecnicos: () => requestAllPages<Tecnico>('/api/coord/tecnicos'),
   criarTecnico: (data: { matricula: string; nome: string; regiao: string }) =>
     request<Tecnico>('/api/coord/tecnicos', { method: 'POST', body: JSON.stringify(data) }),
   atualizarTecnico: (id: number, data: Partial<{ matricula: string; nome: string; regiao: string; ativo: boolean }>) =>
     request<Tecnico>(`/api/coord/tecnicos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
 
   // Coordenador - Produtos
-  listarItens: () => request<ItemProduto[]>('/api/coord/itens'),
+  listarItens: () => requestAllPages<ItemProduto>('/api/coord/itens'),
   criarItem: (data: { codigo: string; nome: string; unidade: string; estoqueAtual: number; limiteMaximo: number }) =>
     request<ItemProduto>('/api/coord/itens', { method: 'POST', body: JSON.stringify(data) }),
   atualizarItem: (
@@ -178,6 +179,7 @@ export const api = {
       nome: string;
       unidade: string;
       estoqueAtual: number;
+      expectedEstoqueAtual: number;
       limiteMaximo: number;
       ativo: boolean;
     }>
@@ -198,7 +200,7 @@ export const api = {
     ),
 
   // Coordenador - Usuários
-  listarUsuarios: () => request<UsuarioPublico[]>('/api/coord/usuarios'),
+  listarUsuarios: () => requestAllPages<UsuarioPublico>('/api/coord/usuarios'),
   criarUsuario: (data: { nome: string; username: string; password: string; perfil: PerfilUsuario }) =>
     request<UsuarioPublico>('/api/coord/usuarios', { method: 'POST', body: JSON.stringify(data) }),
   atualizarUsuario: (id: number, data: Partial<{ nome: string; perfil: PerfilUsuario; ativo: boolean }>) =>
@@ -221,7 +223,7 @@ export const api = {
     if (filtros?.competencia) params.set('competencia', filtros.competencia);
     if (filtros?.status) params.set('status', filtros.status);
     const qs = params.toString();
-    return request<SeparacaoResumoCoordenadorDTO[]>(`/api/coord/separacoes${qs ? `?${qs}` : ''}`);
+    return requestAllPages<SeparacaoResumoCoordenadorDTO>(`/api/coord/separacoes${qs ? `?${qs}` : ''}`);
   },
   obterSeparacao: (id: number) => request<SeparacaoCoordenadorDTO>(`/api/coord/separacoes/${id}`),
   ajustarItemRascunho: (
@@ -236,10 +238,10 @@ export const api = {
     }),
   enviarSolicitacao: (separacaoId: number) =>
     request<SeparacaoCoordenadorDTO>(`/api/coord/separacoes/${separacaoId}/enviar`, { method: 'POST' }),
-  listarPendenciasCoord: () => request<PendenciaDTO[]>('/api/coord/pendencias'),
+  listarPendenciasCoord: () => requestAllPages<PendenciaDTO>('/api/coord/pendencias'),
 
   // Estoque
-  listarFilaEstoque: () => request<SeparacaoEstoqueFilaDTO[]>('/api/estoque/fila'),
+  listarFilaEstoque: () => requestAllPages<SeparacaoEstoqueFilaDTO>('/api/estoque/fila'),
   obterDetalheEstoque: (id: number) => request<SeparacaoEstoqueDetalheDTO>(`/api/estoque/fila/${id}`),
   confirmarEntregaEstoque: (
     id: number,
@@ -249,5 +251,5 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
-  listarPendenciasEstoque: () => request<PendenciaDTO[]>('/api/estoque/pendencias'),
+  listarPendenciasEstoque: () => requestAllPages<PendenciaDTO>('/api/estoque/pendencias'),
 };

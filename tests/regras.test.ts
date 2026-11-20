@@ -134,3 +134,13 @@ test('Alertas de régua (abaixo, dentro, acima) e consumo atípico apenas acima 
   assert.equal(acima.consumoAtipico, true);
   assert.equal(acima.semSaldoAlmoxarifado, true);
 });
+
+
+import { gerarCsvSeparacaoSimples } from '../server/services.ts';
+test('Segurança: CSV neutraliza fórmulas com espaços e caracteres de controle', () => {
+  for (const nome of ['=1+1', '  =1+1', String.fromCharCode(9) + '=1+1', String.fromCharCode(13) + '=1+1', '+CMD', '@SUM(1)']) {
+    const csv = gerarCsvSeparacaoSimples([{ codigo: 'MAT', nome, unidade: 'un', quantidadeASeparar: 1 }]);
+    assert.ok(csv.includes(`'${nome}`));
+    if (nome.includes(String.fromCharCode(13))) assert.ok(csv.includes(`"'${nome}"`));
+  }
+});
