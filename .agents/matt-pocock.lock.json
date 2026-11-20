@@ -1,0 +1,1317 @@
+{
+  "schemaVersion": 1,
+  "installedAt": "2026-11-20T18:16:33.731Z",
+  "source": "https://github.com/mattpocock/skills",
+  "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+  "license": "MIT",
+  "method": "Version-pinned file import; no upstream installer/scripts executed",
+  "groups": [
+    "engineering",
+    "productivity"
+  ],
+  "skillCount": 27,
+  "excludedGroups": [
+    "in-progress",
+    "misc",
+    "deprecated"
+  ],
+  "projectRoot": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque",
+  "workspaceRoot": "C:/Users/brasilink/.g4os/workspaces/meu-workspace",
+  "tracker": {
+    "type": "github",
+    "owner": "mairoklpss",
+    "repo": "processos_estoque",
+    "status": "issues-connected; labels-tool-unavailable",
+    "connection": "g4os-github",
+    "connectedLogin": "mairoklpss",
+    "remoteAccessValidated": true,
+    "issuesEnabled": true,
+    "private": true,
+    "permissionsReturned": {
+      "admin": true,
+      "triage": true,
+      "push": true,
+      "pull": true
+    },
+    "remoteLabelsCreated": true,
+    "labelExistenceVerified": "user-reported-2026-11-20",
+    "remoteWritesPerformed": false,
+    "availableOperations": [
+      "get_me",
+      "list_repositories",
+      "list_issues",
+      "get_issue",
+      "create_issue",
+      "add_issue_comment",
+      "get_file_contents",
+      "list_pull_requests",
+      "get_pull_request",
+      "search_pull_requests"
+    ],
+    "unavailableOperations": [
+      "list_labels",
+      "create_label",
+      "apply_label",
+      "remove_label",
+      "edit_issue",
+      "close_issue",
+      "assign_issue",
+      "native_dependencies"
+    ],
+    "labelsReportedByUser": true,
+    "labelsVerifiedByTool": false
+  },
+  "setupStatus": "complete-local-and-tracker; label verification is user-reported",
+  "steeringFile": "AGENTS.md",
+  "skills": [
+    {
+      "slug": "ask-matt",
+      "workspaceSlug": "matt-pocock-ask-matt",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/ask-matt",
+      "originalSha256": "1371f5ce005de0992a44b137748bfb960a56948aa9871b405fe9d90b24332e3c",
+      "workspaceSha256": "633c790d2b9155b8d995372550ca189c5cfbcdcbbec0ca3e0053bf2ce2c82ffb",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "code-review",
+      "workspaceSlug": "matt-pocock-code-review",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/code-review",
+      "originalSha256": "9c921a8d88138a41401d8897ca1bb852088ab1b7b605cdd04edc13e3e8aab6dd",
+      "workspaceSha256": "34e55b7565a4c91abf7ddb4b7ff045cd195d565fc7e10c6515f85d401e67e08c",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "codebase-design",
+      "workspaceSlug": "matt-pocock-codebase-design",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/codebase-design",
+      "originalSha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "workspaceSha256": "1054657eb1cd099b857d2988cb81bf071cab081b165c7b6e9ffc2beeeb5f07cd",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "diagnosing-bugs",
+      "workspaceSlug": "matt-pocock-diagnosing-bugs",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/diagnosing-bugs",
+      "originalSha256": "849198df88cdb65fd0d97236604c1fca7ff2f22d2f705f9724a800d0266b118d",
+      "workspaceSha256": "657852d1070b4282805fbe903d40f3dd68cb27089eda393ef1114ac156666fbb",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "domain-modeling",
+      "workspaceSlug": "matt-pocock-domain-modeling",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/domain-modeling",
+      "originalSha256": "7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3",
+      "workspaceSha256": "5c54d121f2299085f648a67e053502fa8a7e90d8d21b8a496dfd71335fae7d80",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "grill-with-docs",
+      "workspaceSlug": "matt-pocock-grill-with-docs",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/grill-with-docs",
+      "originalSha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+      "workspaceSha256": "9923d3b03d661820c8d4468a7523ea273287ba32183a256d170ff68f05ae2736",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "implement-spec",
+      "workspaceSlug": "matt-pocock-implement-spec",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/implement-spec",
+      "originalSha256": "1993a473cec40ac85d081c112cdffdc63ec3267c2e412055ad09e013a2f623d1",
+      "workspaceSha256": "da3ce1b17d2bb9dcc4ceb2238b394768ba47d981ab4e86f4d1c0181f1755dfa7",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "implement",
+      "workspaceSlug": "matt-pocock-implement",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/implement",
+      "originalSha256": "483bdc4ccf4ac31d86ac7beeaa0d0db80313e71e120bb8c59b3196ae5decd53d",
+      "workspaceSha256": "a7892b4cffffad3dfb3c80a647394177c9ff509bcd7027d86119ee1d0c73f5e8",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "improve-codebase-architecture",
+      "workspaceSlug": "matt-pocock-improve-codebase-architecture",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/improve-codebase-architecture",
+      "originalSha256": "35b03a3db61e0f5aa333ea59b54963e45a3d2ace6649b2ef4f9576603e2582a6",
+      "workspaceSha256": "ad1fc76fe8a808e2401f1ebb9075bb3662a0e708ec8ad3d3184edb4a11fb6146",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "pr",
+      "workspaceSlug": "matt-pocock-pr",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/pr",
+      "originalSha256": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+      "workspaceSha256": "5317beca96c89c68c0ce14db6d9f629807873f20e2c5efc5c56aee7cf8d39369",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "prototype",
+      "workspaceSlug": "matt-pocock-prototype",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/prototype",
+      "originalSha256": "714de632d116bb73f65cdb5a882db15b9369a6713b9a47c0fad827848f0bfbe3",
+      "workspaceSha256": "1e5fd8236b6214f17387ed98e9f6dfe580dcf6d897d7fb66984c1b9ba1d0b58c",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "research",
+      "workspaceSlug": "matt-pocock-research",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/research",
+      "originalSha256": "1f629e18ab899412683bc6a1c4efb4339999e27c2fdac328f26ee10a8c031d33",
+      "workspaceSha256": "8278751b32626a44cd640fae2231259ef2f987b19cb8e7261ac0319b21be9bd7",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "retro",
+      "workspaceSlug": "matt-pocock-retro",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/retro",
+      "originalSha256": "33fbc28568e3146f20fd908b12998bc0ab30aa4f4c87288199a40793efa94696",
+      "workspaceSha256": "a6a0a91e319cd66a4f3f87725635a821309d651689066803c51c252e5c01961d",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "setup-matt-pocock-skills",
+      "workspaceSlug": "matt-pocock-setup-matt-pocock-skills",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills",
+      "originalSha256": "b01e05bfe8c323171275c6ceec78b12f1bd4c62dfd26c2cfe8be806d3883f1ed",
+      "workspaceSha256": "bd9c7fba761e0e513cd9a54ede4362997caabdb42ae4d6fe745a74dd1452e52b",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "tdd",
+      "workspaceSlug": "matt-pocock-tdd",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/tdd",
+      "originalSha256": "5505d25bbaa8fc14a79e4d20163936958992a2995b7f1dd1d6197edc9ed722e0",
+      "workspaceSha256": "3d0ccd0098e46223a0f450787c63feb27a270c775f46df3b21885dd505e746d3",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "to-spec",
+      "workspaceSlug": "matt-pocock-to-spec",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/to-spec",
+      "originalSha256": "43ad9cf318e5e7d3d1fa360253a37021796dc87a0c2e595ad262661a10f85088",
+      "workspaceSha256": "199045d008259250c408b58ca7bd3301351169574f19ca462a45ee8a4a96a252",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "to-tickets",
+      "workspaceSlug": "matt-pocock-to-tickets",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/to-tickets",
+      "originalSha256": "56ec23c5b2782785d4e65bff9e315b6d3aeb4ef977c174a219e99489fada1995",
+      "workspaceSha256": "a904f866c53d0e75d156ee51a93b69e6131f626f809611a3daeb7b9b8e0cf556",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "triage",
+      "workspaceSlug": "matt-pocock-triage",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/triage",
+      "originalSha256": "917b0baf74be583e74f110857ed45df2766617f75c00baf61fd136d7af515edf",
+      "workspaceSha256": "b1b57034a164b1ead77b889ed66bcc5a19b0b7e042e6d3f1349258ca17b5f022",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "wayfinder",
+      "workspaceSlug": "matt-pocock-wayfinder",
+      "group": "engineering",
+      "invocation": "user-only",
+      "sourcePath": "skills/engineering/wayfinder",
+      "originalSha256": "0c9fa96791aebf3b7d654cf35c6aadde97d81f57c17b07d13b27c14d9c46561f",
+      "workspaceSha256": "ce78eeb1019b34782d99ac792b7a2bb668bfdea60d39b867be8962324a3d7fe1",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "wizard",
+      "workspaceSlug": "matt-pocock-wizard",
+      "group": "engineering",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/engineering/wizard",
+      "originalSha256": "bdf31d48211ea559878f95a4f344aeabf8d85897488ba564382bab0b000daac1",
+      "workspaceSha256": "31959b01bd5f717d056e69d043710a9127656ef903c2f5d40f76c24eca637250",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "grill-me",
+      "workspaceSlug": "matt-pocock-grill-me",
+      "group": "productivity",
+      "invocation": "user-only",
+      "sourcePath": "skills/productivity/grill-me",
+      "originalSha256": "caaf8b8de1684f96e26b28f3c29189db5c89cce4b73e1c93d86164f66ef88637",
+      "workspaceSha256": "edf8121aed1ce5fd314b83819f8dda72d3554e95369b48346c21455b266b8d38",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "grilling",
+      "workspaceSlug": "matt-pocock-grilling",
+      "group": "productivity",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/productivity/grilling",
+      "originalSha256": "a146842ed93ca43d833550fa9adf02e58cb63c83fea9d4b4522995b82242d4e2",
+      "workspaceSha256": "d865457c581fb2d9bc5b05e3dc760815edda860e7a48179a0d02a9acb4ecc833",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "handoff",
+      "workspaceSlug": "matt-pocock-handoff",
+      "group": "productivity",
+      "invocation": "user-only",
+      "sourcePath": "skills/productivity/handoff",
+      "originalSha256": "4cbb043950dad2ffd3662ff1a5a0b51ae676004b5cae10e3787e8ee7a4ee69d3",
+      "workspaceSha256": "eb604aa1ae00eac1e63fc6094f8a182d2f267bfadc7d7e6f25fff93e007265dd",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "teach",
+      "workspaceSlug": "matt-pocock-teach",
+      "group": "productivity",
+      "invocation": "user-only",
+      "sourcePath": "skills/productivity/teach",
+      "originalSha256": "550482c2d674b085c9043b87bfdc14a8f2ec453c736119e7fcbb1e9332bffeba",
+      "workspaceSha256": "6f01c0c61bdd1380d7c6ad3f55a389298159a518bc9ede50dd53023e3ddcf76e",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "to-questionnaire",
+      "workspaceSlug": "matt-pocock-to-questionnaire",
+      "group": "productivity",
+      "invocation": "user-only",
+      "sourcePath": "skills/productivity/to-questionnaire",
+      "originalSha256": "b5eb929842ee0e93d867c5e906d183d350f2f2d149eaeaa86967d94d8eda1d3b",
+      "workspaceSha256": "49f714c27d4f4e53c55499aa45676b134877c23d2e10b7eb5247b377ea23a2a4",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "wait-what",
+      "workspaceSlug": "matt-pocock-wait-what",
+      "group": "productivity",
+      "invocation": "user-only",
+      "sourcePath": "skills/productivity/wait-what",
+      "originalSha256": "d961bb37defd975c539427edb8f450cdbccdcdd552e213c1ece46676a7970905",
+      "workspaceSha256": "fad51c090628dcdc9b204b691b57fffe441ecea1929a3490aafe70097aa431d4",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    },
+    {
+      "slug": "writing-for-agents",
+      "workspaceSlug": "matt-pocock-writing-for-agents",
+      "group": "productivity",
+      "invocation": "model-or-user",
+      "sourcePath": "skills/productivity/writing-for-agents",
+      "originalSha256": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+      "workspaceSha256": "50201a34c238f95ce427c58bb534dd5fb63bd9049ee96997ce81c2317e38d639",
+      "originalFrontmatterPreservedExceptNameAndDescription": true
+    }
+  ],
+  "files": [
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/ask-matt/PHASE-BOUNDARIES.md",
+      "sha256": "a8aa20158609ef39e2b308b6ba0660c91066838d07a867202e63a7744a88a3ed",
+      "original": "skills/engineering/ask-matt/PHASE-BOUNDARIES.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-ask-matt/PHASE-BOUNDARIES.md",
+      "sha256": "a8aa20158609ef39e2b308b6ba0660c91066838d07a867202e63a7744a88a3ed",
+      "original": "skills/engineering/ask-matt/PHASE-BOUNDARIES.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/ask-matt/SKILL.md",
+      "sha256": "1371f5ce005de0992a44b137748bfb960a56948aa9871b405fe9d90b24332e3c",
+      "original": "skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-ask-matt/SKILL.md",
+      "sha256": "633c790d2b9155b8d995372550ca189c5cfbcdcbbec0ca3e0053bf2ce2c82ffb",
+      "original": "skills/engineering/ask-matt/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/ask-matt/agents/openai.yaml",
+      "sha256": "bdffbc5a0a99ed1b6ef3253d251d755fd18162b9845972e380007f844b09b05c",
+      "original": "skills/engineering/ask-matt/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-ask-matt/agents/openai.yaml",
+      "sha256": "bdffbc5a0a99ed1b6ef3253d251d755fd18162b9845972e380007f844b09b05c",
+      "original": "skills/engineering/ask-matt/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-ask-matt/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/code-review/SKILL.md",
+      "sha256": "9c921a8d88138a41401d8897ca1bb852088ab1b7b605cdd04edc13e3e8aab6dd",
+      "original": "skills/engineering/code-review/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-code-review/SKILL.md",
+      "sha256": "34e55b7565a4c91abf7ddb4b7ff045cd195d565fc7e10c6515f85d401e67e08c",
+      "original": "skills/engineering/code-review/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/code-review/agents/openai.yaml",
+      "sha256": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+      "original": "skills/engineering/code-review/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-code-review/agents/openai.yaml",
+      "sha256": "8229ca854e11dc8e6aef2131ee03f31fb1561cf905fab9ccc325180cf3331352",
+      "original": "skills/engineering/code-review/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-code-review/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/codebase-design/DEEPENING.md",
+      "sha256": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+      "original": "skills/engineering/codebase-design/DEEPENING.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-codebase-design/DEEPENING.md",
+      "sha256": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+      "original": "skills/engineering/codebase-design/DEEPENING.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/codebase-design/DESIGN-IT-TWICE.md",
+      "sha256": "c222ab5a82e0405672eb9062d62496139a08828e45d07fc5f18e4952c10fac1a",
+      "original": "skills/engineering/codebase-design/DESIGN-IT-TWICE.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-codebase-design/DESIGN-IT-TWICE.md",
+      "sha256": "c222ab5a82e0405672eb9062d62496139a08828e45d07fc5f18e4952c10fac1a",
+      "original": "skills/engineering/codebase-design/DESIGN-IT-TWICE.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/codebase-design/SKILL.md",
+      "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+      "original": "skills/engineering/codebase-design/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-codebase-design/SKILL.md",
+      "sha256": "1054657eb1cd099b857d2988cb81bf071cab081b165c7b6e9ffc2beeeb5f07cd",
+      "original": "skills/engineering/codebase-design/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/codebase-design/agents/openai.yaml",
+      "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+      "original": "skills/engineering/codebase-design/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-codebase-design/agents/openai.yaml",
+      "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+      "original": "skills/engineering/codebase-design/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-codebase-design/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/diagnosing-bugs/SKILL.md",
+      "sha256": "849198df88cdb65fd0d97236604c1fca7ff2f22d2f705f9724a800d0266b118d",
+      "original": "skills/engineering/diagnosing-bugs/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-diagnosing-bugs/SKILL.md",
+      "sha256": "657852d1070b4282805fbe903d40f3dd68cb27089eda393ef1114ac156666fbb",
+      "original": "skills/engineering/diagnosing-bugs/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/diagnosing-bugs/agents/openai.yaml",
+      "sha256": "3e430dbe4334a87597488c060cb3dc3786bb00c9182877d6f5ec41f62490e90b",
+      "original": "skills/engineering/diagnosing-bugs/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-diagnosing-bugs/agents/openai.yaml",
+      "sha256": "3e430dbe4334a87597488c060cb3dc3786bb00c9182877d6f5ec41f62490e90b",
+      "original": "skills/engineering/diagnosing-bugs/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/diagnosing-bugs/scripts/hitl-loop.template.sh",
+      "sha256": "35103539fc36873eea36074769ad454f9379d6fc8b2dc0e26ce987fd3bfe5503",
+      "original": "skills/engineering/diagnosing-bugs/scripts/hitl-loop.template.sh"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-diagnosing-bugs/scripts/hitl-loop.template.sh",
+      "sha256": "35103539fc36873eea36074769ad454f9379d6fc8b2dc0e26ce987fd3bfe5503",
+      "original": "skills/engineering/diagnosing-bugs/scripts/hitl-loop.template.sh"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-diagnosing-bugs/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/domain-modeling/ADR-FORMAT.md",
+      "sha256": "944c92aa790e8fbdc9199640b170979abb8a34ba8d0fe18c2a01a63bce140ca0",
+      "original": "skills/engineering/domain-modeling/ADR-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-domain-modeling/ADR-FORMAT.md",
+      "sha256": "944c92aa790e8fbdc9199640b170979abb8a34ba8d0fe18c2a01a63bce140ca0",
+      "original": "skills/engineering/domain-modeling/ADR-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+      "sha256": "21dcc40cdec8e151a829b98ab1517c1867bc444e3665134a98c6983411996801",
+      "original": "skills/engineering/domain-modeling/GLOSSARY-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-domain-modeling/GLOSSARY-FORMAT.md",
+      "sha256": "21dcc40cdec8e151a829b98ab1517c1867bc444e3665134a98c6983411996801",
+      "original": "skills/engineering/domain-modeling/GLOSSARY-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/domain-modeling/SKILL.md",
+      "sha256": "7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3",
+      "original": "skills/engineering/domain-modeling/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-domain-modeling/SKILL.md",
+      "sha256": "5c54d121f2299085f648a67e053502fa8a7e90d8d21b8a496dfd71335fae7d80",
+      "original": "skills/engineering/domain-modeling/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/domain-modeling/agents/openai.yaml",
+      "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+      "original": "skills/engineering/domain-modeling/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-domain-modeling/agents/openai.yaml",
+      "sha256": "f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b",
+      "original": "skills/engineering/domain-modeling/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-domain-modeling/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grill-with-docs/SKILL.md",
+      "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+      "original": "skills/engineering/grill-with-docs/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-with-docs/SKILL.md",
+      "sha256": "9923d3b03d661820c8d4468a7523ea273287ba32183a256d170ff68f05ae2736",
+      "original": "skills/engineering/grill-with-docs/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grill-with-docs/agents/openai.yaml",
+      "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+      "original": "skills/engineering/grill-with-docs/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-with-docs/agents/openai.yaml",
+      "sha256": "94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9",
+      "original": "skills/engineering/grill-with-docs/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-with-docs/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/implement-spec/SKILL.md",
+      "sha256": "1993a473cec40ac85d081c112cdffdc63ec3267c2e412055ad09e013a2f623d1",
+      "original": "skills/engineering/implement-spec/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement-spec/SKILL.md",
+      "sha256": "da3ce1b17d2bb9dcc4ceb2238b394768ba47d981ab4e86f4d1c0181f1755dfa7",
+      "original": "skills/engineering/implement-spec/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/implement-spec/agents/openai.yaml",
+      "sha256": "fd41efb42c60c96320d6531be7e4bf15cbf5518cd652d57dff27ccffa46988e9",
+      "original": "skills/engineering/implement-spec/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement-spec/agents/openai.yaml",
+      "sha256": "fd41efb42c60c96320d6531be7e4bf15cbf5518cd652d57dff27ccffa46988e9",
+      "original": "skills/engineering/implement-spec/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement-spec/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/implement/SKILL.md",
+      "sha256": "483bdc4ccf4ac31d86ac7beeaa0d0db80313e71e120bb8c59b3196ae5decd53d",
+      "original": "skills/engineering/implement/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement/SKILL.md",
+      "sha256": "a7892b4cffffad3dfb3c80a647394177c9ff509bcd7027d86119ee1d0c73f5e8",
+      "original": "skills/engineering/implement/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/implement/agents/openai.yaml",
+      "sha256": "8970a8596ade0c28ab427f41a4ea242d6bdf6186c59ebf55e1238dbecaab79dc",
+      "original": "skills/engineering/implement/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement/agents/openai.yaml",
+      "sha256": "8970a8596ade0c28ab427f41a4ea242d6bdf6186c59ebf55e1238dbecaab79dc",
+      "original": "skills/engineering/implement/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-implement/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/improve-codebase-architecture/HTML-REPORT.md",
+      "sha256": "581e8bb5a521e46bbda8ca7e19b15948bed882187108092ebb90c62513b77528",
+      "original": "skills/engineering/improve-codebase-architecture/HTML-REPORT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-improve-codebase-architecture/HTML-REPORT.md",
+      "sha256": "581e8bb5a521e46bbda8ca7e19b15948bed882187108092ebb90c62513b77528",
+      "original": "skills/engineering/improve-codebase-architecture/HTML-REPORT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/improve-codebase-architecture/SKILL.md",
+      "sha256": "35b03a3db61e0f5aa333ea59b54963e45a3d2ace6649b2ef4f9576603e2582a6",
+      "original": "skills/engineering/improve-codebase-architecture/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-improve-codebase-architecture/SKILL.md",
+      "sha256": "ad1fc76fe8a808e2401f1ebb9075bb3662a0e708ec8ad3d3184edb4a11fb6146",
+      "original": "skills/engineering/improve-codebase-architecture/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/improve-codebase-architecture/agents/openai.yaml",
+      "sha256": "c8cb20f68ebf0edb4e497bc11ae5fcaa196004e661cd189015b04f4109ced7f1",
+      "original": "skills/engineering/improve-codebase-architecture/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-improve-codebase-architecture/agents/openai.yaml",
+      "sha256": "c8cb20f68ebf0edb4e497bc11ae5fcaa196004e661cd189015b04f4109ced7f1",
+      "original": "skills/engineering/improve-codebase-architecture/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-improve-codebase-architecture/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/pr/CREDITS.md",
+      "sha256": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+      "original": "skills/engineering/pr/CREDITS.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-pr/CREDITS.md",
+      "sha256": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+      "original": "skills/engineering/pr/CREDITS.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/pr/SKILL.md",
+      "sha256": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+      "original": "skills/engineering/pr/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-pr/SKILL.md",
+      "sha256": "5317beca96c89c68c0ce14db6d9f629807873f20e2c5efc5c56aee7cf8d39369",
+      "original": "skills/engineering/pr/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/pr/agents/openai.yaml",
+      "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "original": "skills/engineering/pr/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-pr/agents/openai.yaml",
+      "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "original": "skills/engineering/pr/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-pr/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/prototype/LOGIC.md",
+      "sha256": "f61c7d249e786a79ef289018901c348271e1798dd0b0bc5607b5c6f4d4a01ab9",
+      "original": "skills/engineering/prototype/LOGIC.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-prototype/LOGIC.md",
+      "sha256": "f61c7d249e786a79ef289018901c348271e1798dd0b0bc5607b5c6f4d4a01ab9",
+      "original": "skills/engineering/prototype/LOGIC.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/prototype/SKILL.md",
+      "sha256": "714de632d116bb73f65cdb5a882db15b9369a6713b9a47c0fad827848f0bfbe3",
+      "original": "skills/engineering/prototype/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-prototype/SKILL.md",
+      "sha256": "1e5fd8236b6214f17387ed98e9f6dfe580dcf6d897d7fb66984c1b9ba1d0b58c",
+      "original": "skills/engineering/prototype/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/prototype/UI.md",
+      "sha256": "723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3",
+      "original": "skills/engineering/prototype/UI.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-prototype/UI.md",
+      "sha256": "723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3",
+      "original": "skills/engineering/prototype/UI.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/prototype/agents/openai.yaml",
+      "sha256": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
+      "original": "skills/engineering/prototype/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-prototype/agents/openai.yaml",
+      "sha256": "5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc",
+      "original": "skills/engineering/prototype/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-prototype/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/research/SKILL.md",
+      "sha256": "1f629e18ab899412683bc6a1c4efb4339999e27c2fdac328f26ee10a8c031d33",
+      "original": "skills/engineering/research/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-research/SKILL.md",
+      "sha256": "8278751b32626a44cd640fae2231259ef2f987b19cb8e7261ac0319b21be9bd7",
+      "original": "skills/engineering/research/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/research/agents/openai.yaml",
+      "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
+      "original": "skills/engineering/research/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-research/agents/openai.yaml",
+      "sha256": "9b4c470d63221c1f68f22df70b83e2f12401b317babe0d1b7b5f24a974474d0d",
+      "original": "skills/engineering/research/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-research/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/retro/SKILL.md",
+      "sha256": "33fbc28568e3146f20fd908b12998bc0ab30aa4f4c87288199a40793efa94696",
+      "original": "skills/engineering/retro/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-retro/SKILL.md",
+      "sha256": "a6a0a91e319cd66a4f3f87725635a821309d651689066803c51c252e5c01961d",
+      "original": "skills/engineering/retro/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/retro/agents/openai.yaml",
+      "sha256": "cb6fb9d7e6b4be5975f41f6def1dd00a1255bad5d9b02696b124c924a8b8745c",
+      "original": "skills/engineering/retro/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-retro/agents/openai.yaml",
+      "sha256": "cb6fb9d7e6b4be5975f41f6def1dd00a1255bad5d9b02696b124c924a8b8745c",
+      "original": "skills/engineering/retro/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-retro/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/SKILL.md",
+      "sha256": "b01e05bfe8c323171275c6ceec78b12f1bd4c62dfd26c2cfe8be806d3883f1ed",
+      "original": "skills/engineering/setup-matt-pocock-skills/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/SKILL.md",
+      "sha256": "bd9c7fba761e0e513cd9a54ede4362997caabdb42ae4d6fe745a74dd1452e52b",
+      "original": "skills/engineering/setup-matt-pocock-skills/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/agents/openai.yaml",
+      "sha256": "9527de0110541c45712319025155aeab8dc7d77c6ed6e5e83271bab1851ab939",
+      "original": "skills/engineering/setup-matt-pocock-skills/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/agents/openai.yaml",
+      "sha256": "9527de0110541c45712319025155aeab8dc7d77c6ed6e5e83271bab1851ab939",
+      "original": "skills/engineering/setup-matt-pocock-skills/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/domain.md",
+      "sha256": "593a7042218689f1d24df89df14eaf0a20e19e0d0a7d479a01947ac78f0784b9",
+      "original": "skills/engineering/setup-matt-pocock-skills/domain.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/domain.md",
+      "sha256": "593a7042218689f1d24df89df14eaf0a20e19e0d0a7d479a01947ac78f0784b9",
+      "original": "skills/engineering/setup-matt-pocock-skills/domain.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/issue-tracker-github.md",
+      "sha256": "6fdb3e9b00b7b0b115ecac3b1c00e3790f637f190abf598815368722c0a94692",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-github.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/issue-tracker-github.md",
+      "sha256": "6fdb3e9b00b7b0b115ecac3b1c00e3790f637f190abf598815368722c0a94692",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-github.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/issue-tracker-gitlab.md",
+      "sha256": "947602d33a80f98f939fb990995b8f95a3459b114b919c4221d08bd75d7cffe0",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-gitlab.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/issue-tracker-gitlab.md",
+      "sha256": "947602d33a80f98f939fb990995b8f95a3459b114b919c4221d08bd75d7cffe0",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-gitlab.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/issue-tracker-local.md",
+      "sha256": "7dcda20a2eb4bdc89b95d1143423c0691309921cadae3132e6424f371030506e",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/issue-tracker-local.md",
+      "sha256": "7dcda20a2eb4bdc89b95d1143423c0691309921cadae3132e6424f371030506e",
+      "original": "skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/setup-matt-pocock-skills/triage-labels.md",
+      "sha256": "ae512af838c78b8750471c42cd2b20fa32319553e61d84c9a23d171b40ce14aa",
+      "original": "skills/engineering/setup-matt-pocock-skills/triage-labels.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/triage-labels.md",
+      "sha256": "ae512af838c78b8750471c42cd2b20fa32319553e61d84c9a23d171b40ce14aa",
+      "original": "skills/engineering/setup-matt-pocock-skills/triage-labels.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-setup-matt-pocock-skills/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/tdd/SKILL.md",
+      "sha256": "5505d25bbaa8fc14a79e4d20163936958992a2995b7f1dd1d6197edc9ed722e0",
+      "original": "skills/engineering/tdd/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-tdd/SKILL.md",
+      "sha256": "3d0ccd0098e46223a0f450787c63feb27a270c775f46df3b21885dd505e746d3",
+      "original": "skills/engineering/tdd/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/tdd/agents/openai.yaml",
+      "sha256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+      "original": "skills/engineering/tdd/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-tdd/agents/openai.yaml",
+      "sha256": "ea6f01cf1b8c06a4b0f5b649d74b1b8ce8685e72af1b38d70d877693e092af0b",
+      "original": "skills/engineering/tdd/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/tdd/mocking.md",
+      "sha256": "3ceb807fdf4a47d6a93d4d9a891e5ba6d362a6247bd08adc451feebfc17361ef",
+      "original": "skills/engineering/tdd/mocking.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-tdd/mocking.md",
+      "sha256": "3ceb807fdf4a47d6a93d4d9a891e5ba6d362a6247bd08adc451feebfc17361ef",
+      "original": "skills/engineering/tdd/mocking.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/tdd/tests.md",
+      "sha256": "859f9e592c188fda4fc7277dd180e4ce9c7a2e13f6efe1f6f29eccc9d28c106a",
+      "original": "skills/engineering/tdd/tests.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-tdd/tests.md",
+      "sha256": "859f9e592c188fda4fc7277dd180e4ce9c7a2e13f6efe1f6f29eccc9d28c106a",
+      "original": "skills/engineering/tdd/tests.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-tdd/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-spec/SKILL.md",
+      "sha256": "43ad9cf318e5e7d3d1fa360253a37021796dc87a0c2e595ad262661a10f85088",
+      "original": "skills/engineering/to-spec/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-spec/SKILL.md",
+      "sha256": "199045d008259250c408b58ca7bd3301351169574f19ca462a45ee8a4a96a252",
+      "original": "skills/engineering/to-spec/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-spec/agents/openai.yaml",
+      "sha256": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
+      "original": "skills/engineering/to-spec/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-spec/agents/openai.yaml",
+      "sha256": "1c5b4d1e3d8e52287ef19cc2742fdbbfae1914ac75d33af3e4c8174f08cc55bb",
+      "original": "skills/engineering/to-spec/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-spec/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-tickets/SKILL.md",
+      "sha256": "56ec23c5b2782785d4e65bff9e315b6d3aeb4ef977c174a219e99489fada1995",
+      "original": "skills/engineering/to-tickets/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-tickets/SKILL.md",
+      "sha256": "a904f866c53d0e75d156ee51a93b69e6131f626f809611a3daeb7b9b8e0cf556",
+      "original": "skills/engineering/to-tickets/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-tickets/agents/openai.yaml",
+      "sha256": "21bc6215fffcd7614e9f772bb1760e87cc5fc7dcc707e7d282bc9414267a6090",
+      "original": "skills/engineering/to-tickets/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-tickets/agents/openai.yaml",
+      "sha256": "21bc6215fffcd7614e9f772bb1760e87cc5fc7dcc707e7d282bc9414267a6090",
+      "original": "skills/engineering/to-tickets/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-tickets/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/triage/AGENT-BRIEF.md",
+      "sha256": "7f5f87fed3033df1b06e083c480f3e847b1fbb0647746b8a4c6a50f9f26ef44f",
+      "original": "skills/engineering/triage/AGENT-BRIEF.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-triage/AGENT-BRIEF.md",
+      "sha256": "7f5f87fed3033df1b06e083c480f3e847b1fbb0647746b8a4c6a50f9f26ef44f",
+      "original": "skills/engineering/triage/AGENT-BRIEF.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/triage/OUT-OF-SCOPE.md",
+      "sha256": "1fbf9b432130c6380aa65813b55553cfda150309b27c595e183f8e335b8a190d",
+      "original": "skills/engineering/triage/OUT-OF-SCOPE.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-triage/OUT-OF-SCOPE.md",
+      "sha256": "1fbf9b432130c6380aa65813b55553cfda150309b27c595e183f8e335b8a190d",
+      "original": "skills/engineering/triage/OUT-OF-SCOPE.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/triage/SKILL.md",
+      "sha256": "917b0baf74be583e74f110857ed45df2766617f75c00baf61fd136d7af515edf",
+      "original": "skills/engineering/triage/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-triage/SKILL.md",
+      "sha256": "b1b57034a164b1ead77b889ed66bcc5a19b0b7e042e6d3f1349258ca17b5f022",
+      "original": "skills/engineering/triage/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/triage/agents/openai.yaml",
+      "sha256": "2e683717720cf456d165d0bb1a68bb600d0b6a8ccb61841c172e50d26f95351c",
+      "original": "skills/engineering/triage/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-triage/agents/openai.yaml",
+      "sha256": "2e683717720cf456d165d0bb1a68bb600d0b6a8ccb61841c172e50d26f95351c",
+      "original": "skills/engineering/triage/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-triage/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wayfinder/SKILL.md",
+      "sha256": "0c9fa96791aebf3b7d654cf35c6aadde97d81f57c17b07d13b27c14d9c46561f",
+      "original": "skills/engineering/wayfinder/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wayfinder/SKILL.md",
+      "sha256": "ce78eeb1019b34782d99ac792b7a2bb668bfdea60d39b867be8962324a3d7fe1",
+      "original": "skills/engineering/wayfinder/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wayfinder/agents/openai.yaml",
+      "sha256": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+      "original": "skills/engineering/wayfinder/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wayfinder/agents/openai.yaml",
+      "sha256": "88bc81a11a6d52ac67aeaa76b8b619e387020d47c5133a4dd4927fd15c4ad073",
+      "original": "skills/engineering/wayfinder/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wayfinder/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wizard/SKILL.md",
+      "sha256": "bdf31d48211ea559878f95a4f344aeabf8d85897488ba564382bab0b000daac1",
+      "original": "skills/engineering/wizard/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wizard/SKILL.md",
+      "sha256": "31959b01bd5f717d056e69d043710a9127656ef903c2f5d40f76c24eca637250",
+      "original": "skills/engineering/wizard/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wizard/agents/openai.yaml",
+      "sha256": "98f44d682d58e262f160dc59a8befc365e0aa65820dd0261864af26aa8e59d83",
+      "original": "skills/engineering/wizard/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wizard/agents/openai.yaml",
+      "sha256": "98f44d682d58e262f160dc59a8befc365e0aa65820dd0261864af26aa8e59d83",
+      "original": "skills/engineering/wizard/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wizard/template.sh",
+      "sha256": "6566f147299bc6f1d941e64591ed04385416d543e11f96f564c7228f5018d0ed",
+      "original": "skills/engineering/wizard/template.sh"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wizard/template.sh",
+      "sha256": "6566f147299bc6f1d941e64591ed04385416d543e11f96f564c7228f5018d0ed",
+      "original": "skills/engineering/wizard/template.sh"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wizard/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grill-me/SKILL.md",
+      "sha256": "caaf8b8de1684f96e26b28f3c29189db5c89cce4b73e1c93d86164f66ef88637",
+      "original": "skills/productivity/grill-me/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-me/SKILL.md",
+      "sha256": "edf8121aed1ce5fd314b83819f8dda72d3554e95369b48346c21455b266b8d38",
+      "original": "skills/productivity/grill-me/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grill-me/agents/openai.yaml",
+      "sha256": "c061e39c3e0f9d865fb1b97556d485704af2a8a58f4b8221a8917a5c2074a32b",
+      "original": "skills/productivity/grill-me/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-me/agents/openai.yaml",
+      "sha256": "c061e39c3e0f9d865fb1b97556d485704af2a8a58f4b8221a8917a5c2074a32b",
+      "original": "skills/productivity/grill-me/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grill-me/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grilling/SKILL.md",
+      "sha256": "a146842ed93ca43d833550fa9adf02e58cb63c83fea9d4b4522995b82242d4e2",
+      "original": "skills/productivity/grilling/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grilling/SKILL.md",
+      "sha256": "d865457c581fb2d9bc5b05e3dc760815edda860e7a48179a0d02a9acb4ecc833",
+      "original": "skills/productivity/grilling/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/grilling/agents/openai.yaml",
+      "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+      "original": "skills/productivity/grilling/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grilling/agents/openai.yaml",
+      "sha256": "1411d7df7d99b7e621a1ff8283c8133cc2464be63d064e52d8ce169c6800ee9b",
+      "original": "skills/productivity/grilling/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-grilling/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/handoff/SKILL.md",
+      "sha256": "4cbb043950dad2ffd3662ff1a5a0b51ae676004b5cae10e3787e8ee7a4ee69d3",
+      "original": "skills/productivity/handoff/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-handoff/SKILL.md",
+      "sha256": "eb604aa1ae00eac1e63fc6094f8a182d2f267bfadc7d7e6f25fff93e007265dd",
+      "original": "skills/productivity/handoff/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/handoff/agents/openai.yaml",
+      "sha256": "5c479fd562c691851690e8b18c8501045bef0943c10743d636b2fae26add1d28",
+      "original": "skills/productivity/handoff/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-handoff/agents/openai.yaml",
+      "sha256": "5c479fd562c691851690e8b18c8501045bef0943c10743d636b2fae26add1d28",
+      "original": "skills/productivity/handoff/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-handoff/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/GLOSSARY-FORMAT.md",
+      "sha256": "9b99859ec28437668130d8f2ce5a342938970f8a1ed4fd38c3eab4f4b5fff210",
+      "original": "skills/productivity/teach/GLOSSARY-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/GLOSSARY-FORMAT.md",
+      "sha256": "9b99859ec28437668130d8f2ce5a342938970f8a1ed4fd38c3eab4f4b5fff210",
+      "original": "skills/productivity/teach/GLOSSARY-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/LEARNING-RECORD-FORMAT.md",
+      "sha256": "701fa34b6748aa89e6c960ffb815257f481a7d77fb2900f9028f7edf3fdd6052",
+      "original": "skills/productivity/teach/LEARNING-RECORD-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/LEARNING-RECORD-FORMAT.md",
+      "sha256": "701fa34b6748aa89e6c960ffb815257f481a7d77fb2900f9028f7edf3fdd6052",
+      "original": "skills/productivity/teach/LEARNING-RECORD-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/MISSION-FORMAT.md",
+      "sha256": "8cacbb3c0644d3ae0ea4965564797099401a6930a23f7cf462918576587f2418",
+      "original": "skills/productivity/teach/MISSION-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/MISSION-FORMAT.md",
+      "sha256": "8cacbb3c0644d3ae0ea4965564797099401a6930a23f7cf462918576587f2418",
+      "original": "skills/productivity/teach/MISSION-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/RESOURCES-FORMAT.md",
+      "sha256": "e9cacf34026e11a8d1c8f9de88abe5bcbf654f4ebdb25cae8c0de0d5f48f44ec",
+      "original": "skills/productivity/teach/RESOURCES-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/RESOURCES-FORMAT.md",
+      "sha256": "e9cacf34026e11a8d1c8f9de88abe5bcbf654f4ebdb25cae8c0de0d5f48f44ec",
+      "original": "skills/productivity/teach/RESOURCES-FORMAT.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/SKILL.md",
+      "sha256": "550482c2d674b085c9043b87bfdc14a8f2ec453c736119e7fcbb1e9332bffeba",
+      "original": "skills/productivity/teach/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/SKILL.md",
+      "sha256": "6f01c0c61bdd1380d7c6ad3f55a389298159a518bc9ede50dd53023e3ddcf76e",
+      "original": "skills/productivity/teach/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/teach/agents/openai.yaml",
+      "sha256": "5856f3ae8aec742f1499c640aecdd5f1d6af5fa210a7c6ec794de8263a6f733f",
+      "original": "skills/productivity/teach/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/agents/openai.yaml",
+      "sha256": "5856f3ae8aec742f1499c640aecdd5f1d6af5fa210a7c6ec794de8263a6f733f",
+      "original": "skills/productivity/teach/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-teach/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-questionnaire/SKILL.md",
+      "sha256": "b5eb929842ee0e93d867c5e906d183d350f2f2d149eaeaa86967d94d8eda1d3b",
+      "original": "skills/productivity/to-questionnaire/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-questionnaire/SKILL.md",
+      "sha256": "49f714c27d4f4e53c55499aa45676b134877c23d2e10b7eb5247b377ea23a2a4",
+      "original": "skills/productivity/to-questionnaire/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/to-questionnaire/agents/openai.yaml",
+      "sha256": "9e8a06c38c8842eea8d4922cb9d1ead8e3ace647bab259b943c994a1b4742bc2",
+      "original": "skills/productivity/to-questionnaire/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-questionnaire/agents/openai.yaml",
+      "sha256": "9e8a06c38c8842eea8d4922cb9d1ead8e3ace647bab259b943c994a1b4742bc2",
+      "original": "skills/productivity/to-questionnaire/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-to-questionnaire/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wait-what/SKILL.md",
+      "sha256": "d961bb37defd975c539427edb8f450cdbccdcdd552e213c1ece46676a7970905",
+      "original": "skills/productivity/wait-what/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wait-what/SKILL.md",
+      "sha256": "fad51c090628dcdc9b204b691b57fffe441ecea1929a3490aafe70097aa431d4",
+      "original": "skills/productivity/wait-what/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/wait-what/agents/openai.yaml",
+      "sha256": "b41faadf741d51e4ea184148b2d1854d93f947aaf754c7844f70a00f04194999",
+      "original": "skills/productivity/wait-what/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wait-what/agents/openai.yaml",
+      "sha256": "b41faadf741d51e4ea184148b2d1854d93f947aaf754c7844f70a00f04194999",
+      "original": "skills/productivity/wait-what/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-wait-what/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+      "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+      "original": "skills/productivity/writing-for-agents/SKILL-MECHANICS.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-writing-for-agents/SKILL-MECHANICS.md",
+      "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+      "original": "skills/productivity/writing-for-agents/SKILL-MECHANICS.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/writing-for-agents/SKILL.md",
+      "sha256": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+      "original": "skills/productivity/writing-for-agents/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-writing-for-agents/SKILL.md",
+      "sha256": "50201a34c238f95ce427c58bb534dd5fb63bd9049ee96997ce81c2317e38d639",
+      "original": "skills/productivity/writing-for-agents/SKILL.md"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/skills/writing-for-agents/agents/openai.yaml",
+      "sha256": "eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b",
+      "original": "skills/productivity/writing-for-agents/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-writing-for-agents/agents/openai.yaml",
+      "sha256": "eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b",
+      "original": "skills/productivity/writing-for-agents/agents/openai.yaml"
+    },
+    {
+      "destination": "C:/Users/brasilink/.g4os/workspaces/meu-workspace/skills/matt-pocock-writing-for-agents/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/vendor/matt-pocock/LICENSE",
+      "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+      "original": "LICENSE"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/vendor/matt-pocock/README.md",
+      "sha256": "097f2c95e6bfa3139252c37282482a941d35cfeb6c59d590f748b49e14760c3d",
+      "original": "README.md",
+      "adaptation": "Relative links mapped to pinned source URLs"
+    },
+    {
+      "destination": "C:/Users/brasilink/Documents/PROJETOS/processos_estoque/.agents/vendor/matt-pocock/README.upstream.md",
+      "sha256": "345041d56cf1411b6b3ca1cc54014d26c563890f817f4cb9e2cb193dcd771a3e",
+      "original": "README.md",
+      "archiveOnly": true
+    }
+  ],
+  "nativeValidation": {
+    "validatedSkills": 27,
+    "valid": 27,
+    "errors": 0,
+    "warnings": 0,
+    "method": "G4 OS skill_validate",
+    "catalogObserved": true,
+    "checkedAt": "2026-11-20T18:57:24.240Z"
+  },
+  "projectConfiguration": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "539bb8389ba242a221d26217fdb2924570fc6c52f600e30ad4fb275d52a71c28"
+    },
+    {
+      "path": "docs/agents/issue-tracker.md",
+      "sha256": "df23ffb7a882005b7400ce8184a6961eb84a398610959e35cf8e17c06bc4155d"
+    },
+    {
+      "path": "docs/agents/triage-labels.md",
+      "sha256": "2f7be043d7e883a48fef139e592c30fbcc97b39c1d273bf46eed098f3ccb93f4"
+    },
+    {
+      "path": "docs/agents/domain.md",
+      "sha256": "d4d7c3ac835c26e5bfbf942950df0ac96b1a9b25da827bde2d62242169bea0e6"
+    },
+    {
+      "path": "docs/agents/g4os-skills.md",
+      "sha256": "dbb957a96b5ad0b0c9ca8079413d04167e6696d0a57fdd3cbe2ba26a2843b50b"
+    },
+    {
+      "path": "docs/agents/matt-pocock-skills.md",
+      "sha256": "142c2d6a0d8d797239dcca6fa6633dd3398f4af97dea73824c561cf901231d94"
+    }
+  ]
+}
