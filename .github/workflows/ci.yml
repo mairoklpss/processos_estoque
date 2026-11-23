@@ -1,0 +1,40 @@
+# CI do processos_estoque: gates de qualidade e segurança a cada push/PR.
+# Não faz deploy: a operação continua local (Docker + npm start na máquina da pessoa).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: windows-latest # espelha a máquina de operação (Windows; melhor-sqlite3 nativo)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+  seguranca:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Gate de npm audit (high/critical reprova; exceção exige motivo)
+        run: node scripts/audit-check.mjs
