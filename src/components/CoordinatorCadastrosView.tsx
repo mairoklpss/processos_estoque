@@ -1,6 +1,6 @@
-import { AlertTriangle, KeyRound, Plus, Save, Trash2, UserCheck, UserX } from 'lucide-react';
+import { AlertTriangle, KeyRound, Plus, RefreshCw, Save, Trash2, UserCheck, UserX } from 'lucide-react';
 import { useEffect, useState, type FormEvent } from 'react';
-import { api, ApiError, buildItemUpdatePayload } from '../lib/api.ts';
+import { api, ApiError } from '../lib/api.ts';
 import type {
   ItemProduto,
   ParametroTecnicoItem,
@@ -19,22 +19,19 @@ type AbaCadastro = 'tecnicos' | 'produtos' | 'parametros' | 'usuarios';
 export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: CoordinatorCadastrosViewProps) {
   const [aba, setAba] = useState<AbaCadastro>('tecnicos');
 
-  // Técnicos
+  // Técnicos (sem cadastro manual: virão do IXC)
   const [tecnicos, setTecnicos] = useState<Tecnico[]>([]);
-  const [tecEditId, setTecEditId] = useState<number | null>(null);
-  const [tecMatricula, setTecMatricula] = useState('');
-  const [tecNome, setTecNome] = useState('');
-  const [tecFilial, setTecFilial] = useState('');
+  const [ixcBuscaAberta, setIxcBuscaAberta] = useState(false);
+  const [ixcModo, setIxcModo] = useState<'id' | 'nome'>('id');
+  const [ixcTermo, setIxcTermo] = useState('');
 
-  // Produtos
+  // Produtos (sem cadastro manual: virão do IXC; só Máx. global é editável)
   const [itens, setItens] = useState<ItemProduto[]>([]);
-  const [itemEditId, setItemEditId] = useState<number | null>(null);
-  const [itemCodigo, setItemCodigo] = useState('');
-  const [itemNome, setItemNome] = useState('');
-  const [itemUnidade, setItemUnidade] = useState('un');
-  const [itemEstoque, setItemEstoque] = useState('0');
-  const [itemEstoqueOriginal, setItemEstoqueOriginal] = useState<number | null>(null);
-  const [itemMaximo, setItemMaximo] = useState('10');
+  const [ixcItemBuscaAberta, setIxcItemBuscaAberta] = useState(false);
+  const [ixcItemModo, setIxcItemModo] = useState<'id' | 'nome'>('id');
+  const [ixcItemTermo, setIxcItemTermo] = useState('');
+  const [maxEditId, setMaxEditId] = useState<number | null>(null);
+  const [maxDraft, setMaxDraft] = useState('');
 
   // Parâmetros por técnico
   const [paramTecId, setParamTecId] = useState<string>('');
@@ -99,28 +96,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
     }
   }, [aba, paramTecId]);
 
-  // Handlers Técnicos
-  async function handleSalvarTecnico(e: FormEvent) {
-    e.preventDefault();
-    try {
-      if (tecEditId) {
-        await api.atualizarTecnico(tecEditId, { matricula: tecMatricula, nome: tecNome, filial: tecFilial });
-        onNotify('Técnico atualizado.');
-      } else {
-        await api.criarTecnico({ matricula: tecMatricula, nome: tecNome, filial: tecFilial });
-        onNotify('Técnico cadastrado.');
-      }
-      setTecEditId(null);
-      setTecMatricula('');
-      setTecNome('');
-      setTecFilial('');
-      await loadAll();
-      onRefreshSummary();
-    } catch (err) {
-      onNotify(err instanceof ApiError ? err.message : 'Erro ao salvar técnico.', 'error');
-    }
-  }
-
+  // Handlers Técnicos (sem cadastro manual: virão do IXC)
   async function handleToggleTecnico(t: Tecnico) {
     try {
       await api.atualizarTecnico(t.id, { ativo: !t.ativo });
@@ -132,36 +108,21 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
     }
   }
 
-  // Handlers Produtos
-  async function handleSalvarItem(e: FormEvent) {
-    e.preventDefault();
+  // Handlers Produtos (sem cadastro manual: virão do IXC; só Máx. global é editável)
+  async function handleSalvarMaximo(i: ItemProduto) {
     try {
-      const payload = {
-        codigo: itemCodigo,
-        nome: itemNome,
-        unidade: itemUnidade,
-        estoqueAtual: Number(itemEstoque),
-        limiteMaximo: Number(itemMaximo),
-      };
-      if (itemEditId) {
-        if (itemEstoqueOriginal === null) throw new ApiError(409,'Reabra o produto antes de salvar.');
-        await api.atualizarItem(itemEditId, buildItemUpdatePayload(payload,itemEstoqueOriginal));
-        onNotify('Produto atualizado.');
-      } else {
-        await api.criarItem(payload);
-        onNotify('Produto cadastrado.');
+      const valor = Number(maxDraft);
+      if (!Number.isInteger(valor) || valor < 1) {
+        onNotify('Máx. global deve ser um número inteiro maior que zero.', 'error');
+        return;
       }
-      setItemEditId(null);
-      setItemCodigo('');
-      setItemNome('');
-      setItemUnidade('un');
-      setItemEstoque('0');
-      setItemEstoqueOriginal(null);
-      setItemMaximo('10');
+      await api.atualizarItem(i.id, { limiteMaximo: valor });
+      onNotify('Máx. global atualizado.');
+      setMaxEditId(null);
       await loadAll();
       onRefreshSummary();
     } catch (err) {
-      onNotify(err instanceof ApiError ? err.message : 'Erro ao salvar produto.', 'error');
+      onNotify(err instanceof ApiError ? err.message : 'Erro ao salvar Máx. global.', 'error');
     }
   }
 
@@ -271,80 +232,92 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
       {/* ABA TÉCNICOS */}
       {aba === 'tecnicos' && (
         <div className="space-y-5">
-          <form onSubmit={handleSalvarTecnico} className="bg-white border border-slate-200 rounded-lg p-5">
-            <h2 className="text-sm font-bold text-slate-900 mb-3">
-              {tecEditId ? 'Editar técnico' : 'Cadastrar novo técnico'}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
-              <div>
-                <label htmlFor="tec-mat" className="block text-xs font-medium text-slate-700 mb-1">
-                  Matrícula
-                </label>
-                <input
-                  id="tec-mat"
-                  required
-                  value={tecMatricula}
-                  onChange={(e) => setTecMatricula(e.target.value)}
-                  placeholder="Ex.: TEC-04"
-                  className="w-full h-9 px-3 text-sm font-mono border border-slate-300 rounded-md"
-                />
+          <div className="bg-white border border-slate-200 rounded-lg p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
+                <h2 className="text-sm font-bold text-slate-900">Técnicos vindos do IXC</h2>
+                <p className="text-xs text-slate-600 mt-1">
+                  O cadastro de técnicos será importado automaticamente do IXC quando a integração ficar pronta.
+                  Colaboradores novos e alterações de filial chegarão pela sincronização.
+                </p>
               </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="tec-nome" className="block text-xs font-medium text-slate-700 mb-1">
-                  Nome completo
-                </label>
-                <input
-                  id="tec-nome"
-                  required
-                  value={tecNome}
-                  onChange={(e) => setTecNome(e.target.value)}
-                  placeholder="Nome do técnico"
-                  className="w-full h-9 px-3 text-sm border border-slate-300 rounded-md"
-                />
-              </div>
-              <div>
-                <label htmlFor="tec-filial" className="block text-xs font-medium text-slate-700 mb-1">
-                  Filial
-                </label>
-                <input
-                  id="tec-filial"
-                  value={tecFilial}
-                  onChange={(e) => setTecFilial(e.target.value)}
-                  placeholder="Ex.: Tianguá"
-                  className="w-full h-9 px-3 text-sm border border-slate-300 rounded-md"
-                />
-              </div>
-            </div>
-            <div className="mt-4 flex items-center gap-2">
               <button
-                type="submit"
-                className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#0F4C81] hover:bg-[#0C3D68] rounded-md cursor-pointer"
+                type="button"
+                disabled
+                title="A integração com o IXC ainda não está disponível."
+                className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-slate-400 rounded-md cursor-not-allowed shrink-0"
               >
-                <Plus className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{tecEditId ? 'Salvar alterações' : 'Adicionar técnico'}</span>
+                <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Sincronizar com IXC</span>
               </button>
-              {tecEditId && (
+            </div>
+            <p className="text-xs text-slate-500 mt-2">Sincronização com o IXC: em breve.</p>
+            <div className="mt-3 pt-3 border-t border-slate-100">
+              {ixcBuscaAberta ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIxcModo('id')}
+                      className={ixcModo === 'id' ? 'h-8 px-3 text-xs font-semibold rounded-md bg-[#0F4C81] text-white cursor-pointer' : 'h-8 px-3 text-xs font-medium rounded-md border border-slate-300 text-slate-700 cursor-pointer'}
+                    >
+                      Buscar por ID
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIxcModo('nome')}
+                      className={ixcModo === 'nome' ? 'h-8 px-3 text-xs font-semibold rounded-md bg-[#0F4C81] text-white cursor-pointer' : 'h-8 px-3 text-xs font-medium rounded-md border border-slate-300 text-slate-700 cursor-pointer'}
+                    >
+                      Buscar por nome
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={ixcTermo}
+                      onChange={(e) => setIxcTermo(e.target.value)}
+                      placeholder={ixcModo === 'id' ? 'Ex.: 42' : 'Ex.: nome do técnico'}
+                      className="w-full lg:w-80 h-9 px-3 text-sm border border-slate-300 rounded-md"
+                    />
+                    <button
+                      type="button"
+                      disabled
+                      title="Disponível quando a integração IXC for ativada."
+                      className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-slate-400 rounded-md cursor-not-allowed shrink-0"
+                    >
+                      Buscar no IXC
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIxcBuscaAberta(false)}
+                      className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Disponível quando a integração IXC for ativada: a busca traz o técnico por ID ou nome e, na confirmação, ele entra na lista abaixo.
+                  </p>
+                </div>
+              ) : (
                 <button
                   type="button"
-                  onClick={() => {
-                    setTecEditId(null);
-                    setTecMatricula('');
-                    setTecNome('');
-                    setTecFilial('');
-                  }}
-                  className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
+                  onClick={() => setIxcBuscaAberta(true)}
+                  className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F4C81] border border-[#0F4C81] hover:bg-[#0F4C81]/5 rounded-md cursor-pointer"
                 >
-                  Cancelar edição
+                  <Plus className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Adicionar técnico do IXC</span>
                 </button>
               )}
             </div>
-          </form>
+          </div>
+
 
           <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-100 border-b border-slate-200 font-semibold text-slate-700">
-                  <th className="py-2.5 px-4">Matrícula</th>
+                  <th className="py-2.5 px-4">ID IXC</th>
                   <th className="py-2.5 px-3">Nome</th>
                   <th className="py-2.5 px-3">Filial</th>
                   <th className="py-2.5 px-3">Situação</th>
@@ -362,19 +335,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                         {t.ativo ? 'Ativo' : 'Inativo'}
                       </span>
                     </td>
-                    <td className="py-2.5 px-4 text-right space-x-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setTecEditId(t.id);
-                          setTecMatricula(t.matricula);
-                          setTecNome(t.nome);
-                          setTecFilial(t.filial);
-                        }}
-                        className="text-xs font-medium text-[#0F4C81] hover:underline cursor-pointer"
-                      >
-                        Editar
-                      </button>
+                    <td className="py-2.5 px-4 text-right">
                       <button
                         type="button"
                         onClick={() => void handleToggleTecnico(t)}
@@ -394,110 +355,76 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
       {/* ABA PRODUTOS */}
       {aba === 'produtos' && (
         <div className="space-y-5">
-          <form onSubmit={handleSalvarItem} className="bg-white border border-slate-200 rounded-lg p-5">
-            <h2 className="text-sm font-bold text-slate-900 mb-3">
-              {itemEditId ? 'Editar produto' : 'Cadastrar novo produto'}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 items-end">
-              <div>
-                <label htmlFor="prod-cod" className="block text-xs font-medium text-slate-700 mb-1">
-                  Código
-                </label>
-                <input
-                  id="prod-cod"
-                  required
-                  value={itemCodigo}
-                  onChange={(e) => setItemCodigo(e.target.value)}
-                  placeholder="MAT-007"
-                  className="w-full h-9 px-3 text-sm font-mono border border-slate-300 rounded-md"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="prod-nome" className="block text-xs font-medium text-slate-700 mb-1">
-                  Descrição do material
-                </label>
-                <input
-                  id="prod-nome"
-                  required
-                  value={itemNome}
-                  onChange={(e) => setItemNome(e.target.value)}
-                  placeholder="Ex.: Splitter Óptico 1x8"
-                  className="w-full h-9 px-3 text-sm border border-slate-300 rounded-md"
-                />
-              </div>
-              <div>
-                <label htmlFor="prod-un" className="block text-xs font-medium text-slate-700 mb-1">
-                  Unidade
-                </label>
-                <input
-                  id="prod-un"
-                  required
-                  value={itemUnidade}
-                  onChange={(e) => setItemUnidade(e.target.value)}
-                  placeholder="un ou m"
-                  className="w-full h-9 px-3 text-sm border border-slate-300 rounded-md"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label htmlFor="prod-est" className="block text-xs font-medium text-slate-700 mb-1">
-                    Estoque
-                  </label>
-                  <input
-                    id="prod-est"
-                    type="number"
-                    min={0}
-                    step={1}
-                    required
-                    value={itemEstoque}
-                    onChange={(e) => setItemEstoque(e.target.value)}
-                    className="w-full h-9 px-2.5 text-sm font-mono tabular-nums border border-slate-300 rounded-md"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="prod-max" className="block text-xs font-medium text-slate-700 mb-1">
-                    Máx. global
-                  </label>
-                  <input
-                    id="prod-max"
-                    type="number"
-                    min={1}
-                    step={1}
-                    required
-                    value={itemMaximo}
-                    onChange={(e) => setItemMaximo(e.target.value)}
-                    className="w-full h-9 px-2.5 text-sm font-mono tabular-nums border border-slate-300 rounded-md"
-                  />
-                </div>
+          <div className="bg-white border border-slate-200 rounded-lg p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
+                <h2 className="text-sm font-bold text-slate-900">Produtos vindos do IXC</h2>
+                <p className="text-xs text-slate-600 mt-1">
+                  O estoque e os dados dos produtos virão do IXC e não são editáveis aqui.
+                  O único campo editável é o <strong>Máx. global</strong>, na lista abaixo.
+                </p>
               </div>
             </div>
-            <div className="mt-4 flex items-center gap-2">
-              <button
-                type="submit"
-                className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#0F4C81] hover:bg-[#0C3D68] rounded-md cursor-pointer"
-              >
-                <Plus className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{itemEditId ? 'Salvar produto' : 'Adicionar produto'}</span>
-              </button>
-              {itemEditId && (
+            <div className="mt-3 pt-3 border-t border-slate-100">
+              {ixcItemBuscaAberta ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIxcItemModo('id')}
+                      className={ixcItemModo === 'id' ? 'h-8 px-3 text-xs font-semibold rounded-md bg-[#0F4C81] text-white cursor-pointer' : 'h-8 px-3 text-xs font-medium rounded-md border border-slate-300 text-slate-700 cursor-pointer'}
+                    >
+                      Buscar por ID
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIxcItemModo('nome')}
+                      className={ixcItemModo === 'nome' ? 'h-8 px-3 text-xs font-semibold rounded-md bg-[#0F4C81] text-white cursor-pointer' : 'h-8 px-3 text-xs font-medium rounded-md border border-slate-300 text-slate-700 cursor-pointer'}
+                    >
+                      Buscar por nome
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={ixcItemTermo}
+                      onChange={(e) => setIxcItemTermo(e.target.value)}
+                      placeholder={ixcItemModo === 'id' ? 'Ex.: 318' : 'Ex.: Splitter Óptico 1x8'}
+                      className="w-full lg:w-80 h-9 px-3 text-sm border border-slate-300 rounded-md"
+                    />
+                    <button
+                      type="button"
+                      disabled
+                      title="Disponível quando a integração IXC for ativada."
+                      className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-slate-400 rounded-md cursor-not-allowed shrink-0"
+                    >
+                      Buscar no IXC
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIxcItemBuscaAberta(false)}
+                      className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Disponível quando a integração IXC for ativada: a busca traz o produto por ID ou descrição e, na confirmação, ele entra na lista abaixo.
+                  </p>
+                </div>
+              ) : (
                 <button
                   type="button"
-                  onClick={() => {
-                    setItemEditId(null);
-                    setItemCodigo('');
-                    setItemNome('');
-                    setItemUnidade('un');
-                    setItemEstoque('0');
-                    setItemEstoqueOriginal(null);
-                    setItemMaximo('10');
-                  }}
-                  className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
+                  onClick={() => setIxcItemBuscaAberta(true)}
+                  className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0F4C81] border border-[#0F4C81] hover:bg-[#0F4C81]/5 rounded-md cursor-pointer"
                 >
-                  Cancelar edição
+                  <Plus className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Buscar no IXC</span>
                 </button>
               )}
             </div>
-          </form>
+          </div>
+
 
           <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
             <table className="w-full text-left border-collapse text-xs">
@@ -522,7 +449,35 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                       {item.estoqueAtual}
                     </td>
                     <td className="py-2.5 px-3 text-right font-mono tabular-nums text-slate-800">
-                      {item.limiteMaximo}
+                      {maxEditId === item.id ? (
+                        <span className="inline-flex items-center gap-1">
+                          <input
+                            type="number"
+                            min={1}
+                            step={1}
+                            value={maxDraft}
+                            onChange={(e) => setMaxDraft(e.target.value)}
+                            className="w-16 h-7 px-1.5 text-sm font-mono border border-slate-300 rounded-md text-right"
+                            aria-label={`Máx. global de ${item.nome}`}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => void handleSalvarMaximo(item)}
+                            className="text-xs font-semibold text-[#0F4C81] hover:underline cursor-pointer"
+                          >
+                            Salvar
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setMaxEditId(null)}
+                            className="text-xs font-medium text-slate-500 hover:underline cursor-pointer"
+                          >
+                            Cancelar
+                          </button>
+                        </span>
+                      ) : (
+                        item.limiteMaximo
+                      )}
                     </td>
                     <td className="py-2.5 px-3">
                       <span className={item.ativo ? 'text-emerald-800 font-medium' : 'text-slate-500'}>
@@ -533,17 +488,12 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                       <button
                         type="button"
                         onClick={() => {
-                          setItemEditId(item.id);
-                          setItemCodigo(item.codigo);
-                          setItemNome(item.nome);
-                          setItemUnidade(item.unidade);
-                          setItemEstoque(String(item.estoqueAtual));
-                          setItemEstoqueOriginal(item.estoqueAtual);
-                          setItemMaximo(String(item.limiteMaximo));
+                          setMaxEditId(item.id);
+                          setMaxDraft(String(item.limiteMaximo));
                         }}
                         className="text-xs font-medium text-[#0F4C81] hover:underline cursor-pointer"
                       >
-                        Editar
+                        Máx. global
                       </button>
                       <button
                         type="button"

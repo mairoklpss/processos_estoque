@@ -46,3 +46,42 @@ test('Nenhuma tela exibe "Região"; filial é o termo visível', () => {
   const separar = lerComponente('CoordinatorSepararView.tsx');
   assert.ok(separar.includes('Sem filial'), 'A lista de técnicos deve usar "Sem filial".');
 });
+
+// Issue 05 (ampliada): técnicos chegam do IXC — sem cadastro livre na interface; busca por ID ou nome
+// com adição por confirmação fica preparada (desligada até a API IXC existir); coluna mostra "ID IXC".
+test('Técnicos: sem formulário livre, busca IXC preparada (ID ou nome) e coluna ID IXC', () => {
+  const cadastros = lerComponente('CoordinatorCadastrosView.tsx');
+  const proibidos = ['Cadastrar novo técnico', 'Editar técnico', 'Técnico atualizado.', 'Técnico cadastrado.', "'Adicionar técnico'"];
+  const encontrados = proibidos.filter((texto) => cadastros.includes(texto));
+  assert.deepEqual(
+    encontrados,
+    [],
+    'Formulário de cadastro/edição de técnico ainda presente: ' + encontrados.join(', '),
+  );
+  assert.ok(cadastros.includes('Adicionar técnico do IXC'), 'Botão "Adicionar técnico do IXC" ausente.');
+  assert.ok(cadastros.includes('Sincronizar com IXC'), 'Botão "Sincronizar com IXC" ausente.');
+  assert.ok(cadastros.includes('Buscar por ID') && cadastros.includes('Buscar por nome'), 'As duas opções de busca (ID e nome) precisam estar preparadas.');
+  assert.ok(cadastros.includes('Disponível quando a integração IXC for ativada'), 'Aviso de que a busca só funciona com a API IXC ausente.');
+  assert.ok(cadastros.includes('handleToggleTecnico'), 'Ativar/Desativar técnico deve continuar funcionando.');
+  assert.ok(!/Matr[íi]cula/.test(cadastros.split('ABA TÉCNICOS')[1]?.split('ABA PRODUTOS')[0] ?? ''), 'A lista de técnicos não deve usar o rótulo "Matrícula"; use "ID IXC".');
+  assert.ok(/ID IXC/.test(cadastros), 'Coluna "ID IXC" ausente na lista de técnicos.');
+});
+
+// Issue 06: produtos vindos do IXC — sem cadastro livre; estoque/descrição não editáveis;
+// Máx. global continua editável na lista; busca por ID ou nome preparada (desligada até a API IXC).
+test('Produtos: sem formulário livre, busca IXC preparada e Máx. global editável', () => {
+  const cadastros = lerComponente('CoordinatorCadastrosView.tsx');
+  const proibidos = ['Cadastrar novo produto', 'Editar produto', "'Adicionar produto'", 'Produto cadastrado.', 'Produto atualizado.', 'id="prod-est"'];
+  const encontrados = proibidos.filter((texto) => cadastros.includes(texto));
+  assert.deepEqual(
+    encontrados,
+    [],
+    'Formulário de cadastro/edição de produto ainda presente: ' + encontrados.join(', '),
+  );
+  assert.ok(cadastros.includes('Produtos vindos do IXC'), 'Painel "Produtos vindos do IXC" ausente.');
+  assert.ok(cadastros.includes('Buscar por ID') , 'Opção de busca por ID ausente.');
+  assert.ok(cadastros.includes('Buscar por nome'), 'Opção de busca por nome ausente.');
+  assert.ok(cadastros.includes('Disponível quando a integração IXC for ativada'), 'Aviso da integração IXC ausente.');
+  assert.ok(cadastros.includes('Máx. global'), 'Edição de Máx. global deve continuar existindo.');
+  assert.ok(cadastros.includes('handleSalvarMaximo'), 'Ação de salvar Máx. global ausente.');
+});

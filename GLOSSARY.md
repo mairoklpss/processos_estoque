@@ -16,6 +16,10 @@ _Avoid_: America/Sao_Paulo (em texto de tela), horário de São Paulo
 Unidade/cidade à qual um técnico está vinculado (ex.: Tianguá). Valor futuro do IXC (`id_filial` → cidade); enquanto a integração não existe, é digitado manualmente.
 _Avoid_: região
 
+**ID IXC**:
+Identificador do técnico no IXC, exibido no lugar da matrícula; a busca/adição de técnicos por ID ou nome acontece somente via integração IXC (hoje desligada e sinalizada na interface).
+_Avoid_: matrícula
+
 **Máximo global**:
 Teto de unidades de um produto para um técnico, único campo de produto editável pelo Coordenador; demais dados de produto (incluindo estoque) virão do IXC e não são editáveis.
 _Avoid_: limite, teto global

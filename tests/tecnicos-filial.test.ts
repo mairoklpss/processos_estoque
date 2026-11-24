@@ -72,3 +72,23 @@ test('Criar técnico aceita filial, lista expõe filial e payload com regiao é 
     await srv.close();
   }
 });
+
+test('Busca de técnicos no IXC: rota protegida e indisponível de forma clara até a API existir', async () => {
+  const srv = await startTestServer();
+  try {
+    const semAuth = await fetch(`${srv.baseUrl}/api/coord/tecnicos/ixc/buscar?modo=id&termo=42`);
+    assert.equal(semAuth.status, 401);
+
+    const cookie = await loginAs(srv.baseUrl);
+    const headers = { 'X-Requested-With': 'Brasilink', Cookie: cookie };
+    const buscar = await fetch(`${srv.baseUrl}/api/coord/tecnicos/ixc/buscar?modo=id&termo=42`, { headers });
+    assert.equal(buscar.status, 503);
+    const corpo = (await buscar.json()) as { code?: string };
+    assert.equal(corpo.code, 'IXC_INTEGRACAO_INDISPONIVEL');
+
+    const modoInvalido = await fetch(`${srv.baseUrl}/api/coord/tecnicos/ixc/buscar?modo=apelido&termo=x`, { headers });
+    assert.equal(modoInvalido.status, 400);
+  } finally {
+    await srv.close();
+  }
+});

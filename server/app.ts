@@ -7,6 +7,7 @@ import type { PerfilUsuario, StatusSeparacao } from '../src/shared/types.ts';
 import type { DBInstance } from './db.ts';
 import { adaptSqlite, type AsyncDatabase } from './data-access.ts';
 import { AMBIENTE_LABEL, AppError, ajustarItemRascunho, atualizarItem, atualizarTecnico, atualizarUsuario, calcularSeparacaoRascunho, confirmarEntregaEstoque, criarItem, criarTecnico, criarUsuario, definirMinimoManual, enviarSolicitacaoEstoque, gerarCsvSeparacaoSimples, getDashboardSummary, getUsuarioBySession, listarFilaEstoque, listarItens, listarParametrosTecnico, listarPendencias, listarSeparacoesCoordenador, listarTecnicos, listarUsuarios, loginUsuario, logoutSessao, obterDetalheEstoque, obterSeparacaoCoordenador, redefinirSenhaUsuario, type SessionUser, } from './services.ts';
+import { buscarTecnicosIxc, buscarItensIxc } from './ixc.ts';
 const instance = process.env.APP_INSTANCE ?? 'operacao';
 if (!['operacao', 'homologacao', 'smoke'].includes(instance)) throw new Error('APP_INSTANCE inválida.');
 export const SESSION_COOKIE_NAME = instance === 'operacao' ? 'brasilink_sid' : `brasilink_${instance}_sid`;
@@ -256,6 +257,22 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
             next(err);
         }
     });
+    app.get('/api/coord/tecnicos/ixc/buscar', requireAuth, requireRole('COORDENADOR'), async (req, res, next) => {
+        try {
+            const modo = String(req.query?.modo ?? '');
+            const termo = String(req.query?.termo ?? '').trim();
+            if (modo !== 'id' && modo !== 'nome') {
+                throw new AppError(400, 'Modo de busca inválido: use id ou nome.', 'VALIDATION_ERROR');
+            }
+            if (!termo || termo.length > 200) {
+                throw new AppError(400, 'Informe o termo de busca (até 200 caracteres).', 'VALIDATION_ERROR');
+            }
+            res.json({ modo, termo, resultados: await buscarTecnicosIxc(modo, termo) });
+        }
+        catch (err) {
+            next(err);
+        }
+    });
     app.post('/api/coord/tecnicos', requireAuth, requireRole('COORDENADOR'), async (req, res, next) => {
         try {
             const created = await criarTecnico(db, req.body ?? {});
@@ -277,6 +294,22 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
     app.get('/api/coord/itens', requireAuth, requireRole('COORDENADOR'), async (_req, res, next) => {
         try {
             res.json(await listarItens(db, getPage(_req.query)));
+        }
+        catch (err) {
+            next(err);
+        }
+    });
+    app.get('/api/coord/itens/ixc/buscar', requireAuth, requireRole('COORDENADOR'), async (req, res, next) => {
+        try {
+            const modo = String(req.query?.modo ?? '');
+            const termo = String(req.query?.termo ?? '').trim();
+            if (modo !== 'id' && modo !== 'nome') {
+                throw new AppError(400, 'Modo de busca inválido: use id ou nome.', 'VALIDATION_ERROR');
+            }
+            if (!termo || termo.length > 200) {
+                throw new AppError(400, 'Informe o termo de busca (até 200 caracteres).', 'VALIDATION_ERROR');
+            }
+            res.json({ modo, termo, resultados: await buscarItensIxc(modo, termo) });
         }
         catch (err) {
             next(err);
