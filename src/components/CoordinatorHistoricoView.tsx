@@ -1,6 +1,7 @@
-import { Eye, Filter, RefreshCw } from 'lucide-react';
+import { Calendar, Eye, Filter, RefreshCw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { api, ApiError, formatDateTimeSP } from '../lib/api.ts';
+import { competenciaAtualBrasilia, formatCompetenciaBR } from '../shared/competencia.ts';
 import type {
   SeparacaoResumoCoordenadorDTO,
   StatusSeparacao,
@@ -19,7 +20,7 @@ export function CoordinatorHistoricoView({ onOpenSeparacao, onNotify }: Coordina
   const [loading, setLoading] = useState(true);
 
   const [filtroTecnico, setFiltroTecnico] = useState('');
-  const [filtroCompetencia, setFiltroCompetencia] = useState('');
+  const [filtroCompetencia, setFiltroCompetencia] = useState(competenciaAtualBrasilia);
   const [filtroStatus, setFiltroStatus] = useState<StatusSeparacao | ''>('');
 
   async function loadHistorico() {
@@ -74,13 +75,23 @@ export function CoordinatorHistoricoView({ onOpenSeparacao, onNotify }: Coordina
             <label htmlFor="hist-competencia" className="block text-xs font-medium text-slate-700 mb-1.5">
               Mês de competência
             </label>
-            <input
-              id="hist-competencia"
-              type="month"
-              value={filtroCompetencia}
-              onChange={(e) => setFiltroCompetencia(e.target.value)}
-              className="w-full h-9 px-3 text-sm font-mono bg-white border border-slate-300 rounded-md"
-            />
+            <div className="relative focus-within:ring-2 focus-within:ring-[#0F4C81]/30 rounded-md">
+              <div
+                aria-hidden="true"
+                className="w-full h-9 px-3 text-sm font-mono bg-white border border-slate-300 rounded-md flex items-center justify-between pointer-events-none"
+              >
+                <span className="tabular-nums">{formatCompetenciaBR(filtroCompetencia) || 'DD/MM/AAAA'}</span>
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+              </div>
+              <input
+                id="hist-competencia"
+                type="month"
+                aria-label="Mês de competência"
+                value={filtroCompetencia}
+                onChange={(e) => setFiltroCompetencia(e.target.value)}
+                className="absolute inset-0 w-full h-9 px-3 text-sm font-mono bg-transparent border border-slate-300 rounded-md opacity-0 cursor-pointer"
+              />
+            </div>
           </div>
 
           <div className="w-full sm:w-48">
@@ -106,7 +117,7 @@ export function CoordinatorHistoricoView({ onOpenSeparacao, onNotify }: Coordina
                 type="button"
                 onClick={() => {
                   setFiltroTecnico('');
-                  setFiltroCompetencia('');
+                  setFiltroCompetencia(competenciaAtualBrasilia());
                   setFiltroStatus('');
                 }}
                 className="h-9 px-3 inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50 cursor-pointer"
