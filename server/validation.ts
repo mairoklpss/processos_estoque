@@ -22,7 +22,7 @@ const rules: { method: string; path: RegExp; schema: z.ZodType }[] = [
   { method: 'PATCH', path: /^\/coord\/usuarios\/[1-9][0-9]*$/, schema: z.object({ nome: short.optional(), perfil: profile.optional(), ativo: z.boolean().optional() }).strict() },
   { method: 'POST', path: /^\/coord\/usuarios\/[1-9][0-9]*\/reset-password$/, schema: z.object({ novaSenha: z.string().min(12).max(128) }).strict() },
   { method: 'PUT', path: /^\/coord\/parametros\/[1-9][0-9]*\/[1-9][0-9]*$/, schema: z.object({ minimoManual: integer.nullable() }).strict() },
-  { method: 'POST', path: /^\/coord\/separacoes\/calcular$/, schema: z.object({ tecnicoId: id, observacoes: text.optional() }).strict() },
+  { method: 'POST', path: /^\/coord\/separacoes\/calcular$/, schema: z.object({ tecnicoId: id }).strict() },
   { method: 'PATCH', path: /^\/coord\/separacoes\/[1-9][0-9]*\/itens\/[1-9][0-9]*$/, schema: z.object({ quantidadeSolicitada: integer, justificativa: text }).strict() },
   { method: 'POST', path: /^\/coord\/separacoes\/[1-9][0-9]*\/enviar$/, schema: empty },
   { method: 'POST', path: /^\/estoque\/fila\/[1-9][0-9]*\/confirmar$/, schema: delivery },

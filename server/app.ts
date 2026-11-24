@@ -141,7 +141,7 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
                 return Object.values(value).every(v => valid(v, depth + 1));
             return true;
         }
-        const stringFields = ['nome', 'username', 'password', 'novaSenha', 'perfil', 'codigo', 'unidade', 'matricula', 'regiao', 'observacoes', 'justificativa', 'versaoEstoque'];
+        const stringFields = ['nome', 'username', 'password', 'novaSenha', 'perfil', 'codigo', 'unidade', 'matricula', 'regiao', 'justificativa', 'versaoEstoque'];
         if (req.body !== undefined && (!req.body || typeof req.body !== 'object' || Array.isArray(req.body))) {
             return next(new AppError(400, 'Envie um objeto JSON.', 'INVALID_INPUT'));
         }
@@ -357,8 +357,7 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
     app.post('/api/coord/separacoes/calcular', requireAuth, requireRole('COORDENADOR'), async (req: AuthenticatedRequest, res, next) => {
         try {
             const tecnicoId = Number(req.body?.tecnicoId);
-            const observacoes = req.body?.observacoes ? String(req.body.observacoes) : undefined;
-            const sep = await calcularSeparacaoRascunho(db, req.user!, tecnicoId, observacoes, getNow());
+            const sep = await calcularSeparacaoRascunho(db, req.user!, tecnicoId, getNow());
             res.status(201).json(sep);
         }
         catch (err) {

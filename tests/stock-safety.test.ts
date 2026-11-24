@@ -25,7 +25,7 @@ async function fixture() {
   await db.run('INSERT INTO itens (id,codigo,nome,estoque_atual,limite_maximo,criado_em,atualizado_em) VALUES (1,?,?,100,10,?,?)', 'QA-ITEM', 'QA produto', ts, ts);
   await db.run('INSERT INTO consumos (tecnico_id,item_id,competencia,quantidade_usada) VALUES (1,1,?,22)', '2026-10');
   async function request(manual?: number) {
-    const sep = await calcularSeparacaoRascunho(db, coord, 1, undefined, now);
+    const sep = await calcularSeparacaoRascunho(db, coord, 1, now);
     assert.equal(sep.itens.length, 1);
     if (manual !== undefined) await ajustarItemRascunho(db, coord, sep.id, sep.itens[0].id, manual, 'QA ajuste manual autorizado');
     await enviarSolicitacaoEstoque(db, coord, sep.id);

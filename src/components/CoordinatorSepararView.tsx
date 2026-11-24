@@ -39,7 +39,6 @@ export function CoordinatorSepararView({
   const [rascunhos, setRascunhos] = useState<SeparacaoResumoCoordenadorDTO[]>([]);
   const [searchTech, setSearchTech] = useState('');
   const [selectedTecnicoId, setSelectedTecnicoId] = useState<string>('');
-  const [observacoes, setObservacoes] = useState('');
   const [loadingInit, setLoadingInit] = useState(true);
   const [calculating, setCalculating] = useState(false);
 
@@ -130,10 +129,9 @@ export function CoordinatorSepararView({
     }
     setCalculating(true);
     try {
-      const novaSep = await api.calcularSeparacao(Number(selectedTecnicoId), observacoes);
+      const novaSep = await api.calcularSeparacao(Number(selectedTecnicoId));
       setSeparacao(novaSep);
       onSelectSeparacaoId(novaSep.id);
-      setObservacoes('');
       onNotify(`Rascunho ${novaSep.codigo} calculado com sucesso.`);
       const drafts = await api.listarSeparacoes({ status: 'RASCUNHO' });
       setRascunhos(drafts);
@@ -251,20 +249,6 @@ export function CoordinatorSepararView({
             </select>
           </div>
 
-          <div className="w-full lg:w-64">
-            <label htmlFor="obs-separacao" className="block text-xs font-medium text-slate-700 mb-1.5">
-              Observação (opcional)
-            </label>
-            <input
-              id="obs-separacao"
-              type="text"
-              value={observacoes}
-              onChange={(e) => setObservacoes(e.target.value)}
-              placeholder="Ex.: Reposição semana 3"
-              className="w-full h-10 px-3 text-sm bg-white border border-slate-300 rounded-md text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-700"
-            />
-          </div>
-
           <button
             type="button"
             onClick={handleCalcular}
@@ -276,16 +260,7 @@ export function CoordinatorSepararView({
           </button>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
-          <div className="flex items-center gap-2">
-            <Info className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
-            <span>
-              Período de consumo fechado (America/Sao_Paulo):{' '}
-              <strong className="font-semibold text-slate-900">{summary?.competenciaLabel ?? '...'}</strong>
-              {' · '}Regra semanal provisória sem lotes (uso ÷ 3,1428). O cálculo gera um rascunho sem baixar o estoque.
-            </span>
-          </div>
-
+        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-end gap-3 text-xs text-slate-600">
           {rascunhos.length > 0 && (
             <div className="flex items-center gap-2">
               <label htmlFor="retomar-rascunho" className="text-slate-600 font-medium whitespace-nowrap">

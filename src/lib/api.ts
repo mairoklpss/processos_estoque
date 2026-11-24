@@ -212,10 +212,10 @@ export const api = {
     }),
 
   // Coordenador - Separações
-  calcularSeparacao: (tecnicoId: number, observacoes?: string) =>
+  calcularSeparacao: (tecnicoId: number) =>
     request<SeparacaoCoordenadorDTO>('/api/coord/separacoes/calcular', {
       method: 'POST',
-      body: JSON.stringify({ tecnicoId, observacoes }),
+      body: JSON.stringify({ tecnicoId }),
     }),
   listarSeparacoes: (filtros?: { tecnicoId?: string; competencia?: string; status?: StatusSeparacao | '' }) => {
     const params = new URLSearchParams();

@@ -1,5 +1,5 @@
 param(
- [ValidateSet('up','migrate','verify','test','start','check','backup','restore-backup')][string]$Action='start',
+ [ValidateSet('up','migrate','verify','test','start','check','backup','restore-backup','schema-drop-observacoes')][string]$Action='start',
  [string]$Source,
  [string]$InputPath,
  [string]$OutputPath,
@@ -35,7 +35,7 @@ $previous=@{};foreach($name in $names){$previous[$name]=[Environment]::GetEnviro
 try{
  $env:PG_APP_PASSWORD=Read-Key 'app';$app=[Uri]::EscapeDataString($env:PG_APP_PASSWORD)
  $env:PG_OPERACAO_PASSWORD=$null;$env:PG_MIGRATION_URL=$null;$env:PG_MIGRATION_PROFILE=$null
- if($Action -in @('up','migrate','verify','test')){
+ if($Action -in @('up','migrate','verify','test','schema-drop-observacoes')){
   $env:PG_OPERACAO_PASSWORD=Read-Key 'admin';$admin=[Uri]::EscapeDataString($env:PG_OPERACAO_PASSWORD)
   $env:PG_MIGRATION_PROFILE='operacao';$env:PG_MIGRATION_URL="postgresql://postgres:${admin}@127.0.0.1:55433/brasilink_operacao"
  }
@@ -62,6 +62,13 @@ try{
    & npx.cmd tsx --test tests/postgres-migration.test.ts
    if($LASTEXITCODE -ne 0){throw 'Ensaio falhou; não cortar operação.'}
    & npx.cmd tsx scripts/postgres-app-role.ts
+  }
+  'schema-drop-observacoes'{
+   if(-not $OutputPath){throw 'Informe -OutputPath com o backup .pgdump.enc criado imediatamente antes (issue 02).'}
+   if(-not(Test-Path $OutputPath)){throw 'Backup informado não encontrado; rodar -Action backup primeiro.'}
+   $env:DATABASE_URL=$env:PG_MIGRATION_URL
+   & npx.cmd tsx scripts/pg-drop-observacoes.ts
+   if($LASTEXITCODE -ne 0){throw 'Migração de schema falhou; verificar backup antes de repetir.'}
   }
   {$_ -in @('backup','restore-backup')}{
    $backupKey=Join-Path $root '.local\backups\key.dpapi.xml'

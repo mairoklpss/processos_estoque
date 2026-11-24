@@ -64,6 +64,16 @@ test('Fluxo completo: rascunho invisível ao estoque, ajuste com justificativa, 
     assert.equal(sep.status, 'RASCUNHO');
     assert.equal(sep.competencia, '2026-10');
 
+    // 1b. Observação foi removida da rodada: payload com o campo é recusado de forma clara (issue 02)
+    const calcComObsRes = await fetch(`${srv.baseUrl}/api/coord/separacoes/calcular`, {
+      method: 'POST',
+      headers: { 'X-Requested-With': 'Brasilink', 'Content-Type': 'application/json', Cookie: coordCookie },
+      body: JSON.stringify({ tecnicoId: 1, observacoes: 'qualquer coisa' }),
+    });
+    assert.equal(calcComObsRes.status, 400);
+    const calcComObsJson = (await calcComObsRes.json()) as { code?: string };
+    assert.equal(calcComObsJson.code, 'VALIDATION_ERROR');
+
     // 2. Rascunho deve ser INVISÍVEL ao estoque
     const filaAntes = await fetch(`${srv.baseUrl}/api/estoque/fila`, {
       headers: { 'X-Requested-With': 'Brasilink', Cookie: estoqueCookie },

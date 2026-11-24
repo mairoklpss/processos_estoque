@@ -15,15 +15,22 @@ async function main(){
   const logins=await db.all("SELECT actor_id,COUNT(*) AS count FROM audit_logs WHERE rota='/api/auth/login' AND status=200 AND actor_id IS NOT NULL AND criado_em>=? GROUP BY actor_id ORDER BY actor_id",cutoff);
   const activeAppConnections=await db.get("SELECT COUNT(*) AS count FROM pg_stat_activity WHERE usename=current_user AND datname=current_database() AND pid<>pg_backend_pid()");
   const manifest=JSON.parse(fs.readFileSync('.local/operacao/corte.json','utf8').replace(/^\uFEFF/,''));
-  const source=new Database(manifest.Snapshot,{readonly:true,fileMustExist:true});let comparison;
+  const source=new Database(manifest.Snapshot,{readonly:true,fileMustExist:true});let comparison;let schemaDrift:string[];
   try{
    source.pragma('query_only=ON');source.exec('BEGIN');const expected=inspectSnapshot(source);
+   const liveColumns=new Map<string,Set<string>>();
+   for(const table of expected){
+    const cols=await db.all<{column_name:string}>(`SELECT column_name FROM information_schema.columns WHERE table_schema='public' AND table_name=?`,table.table);
+    liveColumns.set(table.table,new Set(cols.map(c=>c.column_name)));
+   }
+   schemaDrift=expected.flatMap(t=>{const vivos=liveColumns.get(t.table)!;const sumidos=t.columns.filter(c=>!vivos.has(c));return sumidos.length?[`${t.table}: removidas [${sumidos.join(', ')}]`]:[];});
    comparison=await db.transaction(async tx=>{const result=[];for(const table of expected.filter(t=>t.table!=='audit_logs')){
-    const rows=await tx.all<Record<string,unknown>>(`SELECT ${table.columns.map(identifier).join(',')} FROM public.${identifier(table.table)} ORDER BY id`);
-    const hash=crypto.createHash('sha256');for(const row of rows)hash.update(JSON.stringify(table.columns.map(c=>row[c]))+'\n');result.push({table:table.table,sourceCount:table.count,currentCount:rows.length,matchesCutoverSnapshot:hash.digest('hex')===table.sha256});
+    const vivos=liveColumns.get(table.table)!;const colunas=table.columns.filter(c=>vivos.has(c));
+    const rows=await tx.all<Record<string,unknown>>(`SELECT ${colunas.map(identifier).join(',')} FROM public.${identifier(table.table)} ORDER BY id`);
+    const hash=crypto.createHash('sha256');for(const row of rows)hash.update(JSON.stringify(colunas.map(c=>row[c]))+'\n');result.push({table:table.table,sourceCount:table.count,currentCount:rows.length,matchesCutoverSnapshot:hash.digest('hex')===table.sha256&&colunas.length===table.columns.length});
    }return result;});
   }finally{if(source.inTransaction)source.exec('ROLLBACK');source.close();}
-  console.log(JSON.stringify({checkedAt:new Date().toISOString(),backend:db.dialect,identity,rights,stock,sessions,logins,activeAppConnections,comparison,businessRows:comparison.reduce((s,t)=>s+t.currentCount,0),auditAndSessionsExcludedFromBusinessComparison:true,knownDemoCredentialGuardPassed:true},null,2));
+  console.log(JSON.stringify({checkedAt:new Date().toISOString(),backend:db.dialect,identity,rights,stock,sessions,logins,activeAppConnections,comparison,schemaDrift,businessRows:comparison.reduce((s,t)=>s+t.currentCount,0),auditAndSessionsExcludedFromBusinessComparison:true,knownDemoCredentialGuardPassed:true},null,2));
  }finally{await db.close();}
 }
 main().catch(()=>{console.error('OPERATIONAL_CHECK_FAILED: verificar destino operacional e chaves; nenhum fallback SQLite.');process.exitCode=1;});

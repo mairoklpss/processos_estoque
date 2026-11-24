@@ -110,7 +110,6 @@ export interface SeparacaoCoordenadorDTO {
   enviadoEm: string | null;
   confirmadoPorNome: string | null;
   confirmadoEm: string | null;
-  observacoes: string | null;
   itens: SeparacaoItemCoordenadorDTO[];
 }
 

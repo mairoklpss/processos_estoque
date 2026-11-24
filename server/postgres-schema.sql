@@ -95,8 +95,7 @@
       enviado_em TEXT,
       confirmado_por_id INTEGER REFERENCES usuarios(id),
       confirmado_por_nome TEXT,
-      confirmado_em TEXT,
-      observacoes TEXT
+      confirmado_em TEXT
     );
 
     CREATE TABLE separacao_itens (

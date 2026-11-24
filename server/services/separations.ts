@@ -65,12 +65,11 @@ export async function obterSeparacaoCoordenador(db: AsyncDatabase, id: number): 
         enviadoEm: sep.enviado_em !== null ? String(sep.enviado_em) : null,
         confirmadoPorNome: sep.confirmado_por_nome !== null ? String(sep.confirmado_por_nome) : null,
         confirmadoEm: sep.confirmado_em !== null ? String(sep.confirmado_em) : null,
-        observacoes: sep.observacoes !== null ? String(sep.observacoes) : null,
         itens: itemRows.map(mapSeparacaoItemCoordenador),
     };
 }
 
-export async function calcularSeparacaoRascunho(db: AsyncDatabase, user: SessionUser, tecnicoId: number, observacoes?: string, now: Date = new Date()): Promise<SeparacaoCoordenadorDTO> {
+export async function calcularSeparacaoRascunho(db: AsyncDatabase, user: SessionUser, tecnicoId: number, now: Date = new Date()): Promise<SeparacaoCoordenadorDTO> {
     const tecnico = await db.get('SELECT id, matricula, nome, ativo FROM tecnicos WHERE id = ?', tecnicoId) as {
         id: number;
         matricula: string;
@@ -121,9 +120,9 @@ export async function calcularSeparacaoRascunho(db: AsyncDatabase, user: Session
         const sepRes = await db.run(`
         INSERT INTO separacoes (
           codigo, tecnico_id, tecnico_nome_snapshot, competencia, competencia_label,
-          regra_versao, status, calculado_por_id, calculado_por_nome, calculado_em, observacoes
-        ) VALUES (?, ?, ?, ?, ?, ?, 'RASCUNHO', ?, ?, ?, ?)
-      `, codigo, tecnico.id, tecnico.nome, periodo.competencia, periodo.label, REGRA_VERSAO, user.id, user.nome, ts, observacoes?.trim() || null);
+          regra_versao, status, calculado_por_id, calculado_por_nome, calculado_em
+        ) VALUES (?, ?, ?, ?, ?, ?, 'RASCUNHO', ?, ?, ?)
+      `, codigo, tecnico.id, tecnico.nome, periodo.competencia, periodo.label, REGRA_VERSAO, user.id, user.nome, ts);
         const separacaoId = Number(sepRes.insertId);
         const insertItemStmt = `
       INSERT INTO separacao_itens (
