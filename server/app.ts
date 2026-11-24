@@ -230,7 +230,7 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
             next(err);
         }
     });
-    app.post('/api/auth/logout', async (req: AuthenticatedRequest, res, next) => {
+    app.post('/api/auth/logout', requireAuth, async (req: AuthenticatedRequest, res, next) => {
         try {
         await logoutSessao(db, extractSessionToken(req));
         clearSessionCookie(req, res);

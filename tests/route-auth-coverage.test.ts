@@ -14,9 +14,8 @@ const appSource = fs.readFileSync(path.join(import.meta.dirname, '..', 'server',
 
 const PUBLICA: Record<string, string> = {
   '/api/auth/login': 'login é público por natureza; protegido por rate limit de tentativas',
-  '/api/auth/logout': 'limpa o cookie da própria chamada; idempotente, sem efeito sobre dados de terceiros (achado reportado para adicionar requireAuth depois)',
 };
-const SOLE_AUTH: Record<string, string> = { '/api/auth/me': 'identifica a sessão do próprio usuário; exige login, sem papel específico' };
+const SOLE_AUTH: Record<string, string> = { '/api/auth/me': 'identifica a sessão do próprio usuário; exige login, sem papel específico', '/api/auth/logout': 'encerra a própria sessão; exige login, sem papel específico' };
 
 // Uma entrada por rota registrada: onde a proteção dela é testada.
 const COBERTURA: Record<string, string> = {
