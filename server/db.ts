@@ -77,7 +77,7 @@ function initSchema(db: DBInstance): void {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       matricula TEXT NOT NULL UNIQUE,
       nome TEXT NOT NULL,
-      regiao TEXT NOT NULL DEFAULT '',
+      filial TEXT NOT NULL DEFAULT '',
       ativo INTEGER NOT NULL DEFAULT 1,
       criado_em TEXT NOT NULL,
       atualizado_em TEXT NOT NULL
@@ -219,12 +219,12 @@ export function seedDatabaseIfEmpty(db: DBInstance, now: Date = new Date()): voi
 
     // 2. Técnicos simulados (3 iniciais, escalável para 11+ sem alterações)
     const insertTec = db.prepare(`
-      INSERT INTO tecnicos (matricula, nome, regiao, ativo, criado_em, atualizado_em)
+      INSERT INTO tecnicos (matricula, nome, filial, ativo, criado_em, atualizado_em)
       VALUES (?, ?, ?, 1, ?, ?)
     `);
     const tec1 = Number(insertTec.run('TEC-01', 'Lucas Ferreira', 'Zona Norte', ts, ts).lastInsertRowid);
     const tec2 = Number(insertTec.run('TEC-02', 'Rafael Oliveira', 'Zona Sul', ts, ts).lastInsertRowid);
-    const tec3 = Number(insertTec.run('TEC-03', 'Bruno Mendes', 'Região Central', ts, ts).lastInsertRowid);
+    const tec3 = Number(insertTec.run('TEC-03', 'Bruno Mendes', 'Zona Central', ts, ts).lastInsertRowid);
 
     // 3. Produtos simulados (6 materiais típicos FTTH)
     const insertItem = db.prepare(`

@@ -27,7 +27,7 @@ export interface Tecnico {
   id: number;
   matricula: string;
   nome: string;
-  regiao: string;
+  filial: string;
   ativo: boolean;
   criadoEm: string;
   atualizadoEm: string;

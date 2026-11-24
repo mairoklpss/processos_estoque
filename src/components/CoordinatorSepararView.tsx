@@ -112,7 +112,7 @@ export function CoordinatorSepararView({
       (t) =>
         t.nome.toLowerCase().includes(q) ||
         t.matricula.toLowerCase().includes(q) ||
-        t.regiao.toLowerCase().includes(q)
+        t.filial.toLowerCase().includes(q)
     );
   }, [tecnicos, searchTech]);
 
@@ -242,7 +242,7 @@ export function CoordinatorSepararView({
               ) : (
                 filteredTecnicos.map((t) => (
                   <option key={t.id} value={t.id}>
-                    {t.matricula} — {t.nome} ({t.regiao || 'Sem região'})
+                    {t.matricula} — {t.nome} ({t.filial || 'Sem filial'})
                   </option>
                 ))
               )}

@@ -40,12 +40,12 @@ export async function getDashboardSummary(db: AsyncDatabase, now: Date = new Dat
 
 // ---------------- COORDENADOR: TÉCNICOS ----------------
 export async function listarTecnicos(db: AsyncDatabase, page?: Page): Promise<Tecnico[]> {
-    const rows = await db.all('SELECT id, matricula, nome, regiao, ativo, criado_em, atualizado_em FROM tecnicos ORDER BY ativo DESC, nome ASC' + pageSql(page), ...pageParams(page)) as Array<Record<string, unknown>>;
+    const rows = await db.all('SELECT id, matricula, nome, filial, ativo, criado_em, atualizado_em FROM tecnicos ORDER BY ativo DESC, nome ASC' + pageSql(page), ...pageParams(page)) as Array<Record<string, unknown>>;
     return rows.map((r) => ({
         id: Number(r.id),
         matricula: String(r.matricula),
         nome: String(r.nome),
-        regiao: String(r.regiao),
+        filial: String(r.filial),
         ativo: Number(r.ativo) === 1,
         criadoEm: String(r.criado_em),
         atualizadoEm: String(r.atualizado_em),
@@ -55,12 +55,12 @@ export async function listarTecnicos(db: AsyncDatabase, page?: Page): Promise<Te
 export async function criarTecnico(db: AsyncDatabase, input: {
     matricula: string;
     nome: string;
-    regiao?: string;
+    filial?: string;
 }): Promise<Tecnico> {
     return await db.transaction(async (db) => {
         const matricula = input.matricula?.trim().toUpperCase();
         const nome = input.nome?.trim();
-        const regiao = (input.regiao ?? '').trim();
+        const filial = (input.filial ?? '').trim();
         if (!matricula || !nome) {
             throw new AppError(400, 'Matrícula e nome do técnico são obrigatórios.', 'VALIDATION_ERROR');
         }
@@ -69,7 +69,7 @@ export async function criarTecnico(db: AsyncDatabase, input: {
             throw new AppError(409, `Já existe um técnico com a matrícula ${matricula}.`, 'DUPLICATE_MATRICULA');
         }
         const ts = nowIso();
-        const res = await db.run('INSERT INTO tecnicos (matricula, nome, regiao, ativo, criado_em, atualizado_em) VALUES (?, ?, ?, 1, ?, ?)', matricula, nome, regiao, ts, ts);
+        const res = await db.run('INSERT INTO tecnicos (matricula, nome, filial, ativo, criado_em, atualizado_em) VALUES (?, ?, ?, 1, ?, ?)', matricula, nome, filial, ts, ts);
         return (await listarTecnicos(db)).find((t) => t.id === Number(res.insertId))!;
     });
 }
@@ -77,7 +77,7 @@ export async function criarTecnico(db: AsyncDatabase, input: {
 export async function atualizarTecnico(db: AsyncDatabase, id: number, input: {
     matricula?: string;
     nome?: string;
-    regiao?: string;
+    filial?: string;
     ativo?: boolean;
 }): Promise<Tecnico> {
     return await db.transaction(async (db) => {
@@ -85,7 +85,7 @@ export async function atualizarTecnico(db: AsyncDatabase, id: number, input: {
             id: number;
             matricula: string;
             nome: string;
-            regiao: string;
+            filial: string;
             ativo: number;
         } | undefined;
         if (!current) {
@@ -93,7 +93,7 @@ export async function atualizarTecnico(db: AsyncDatabase, id: number, input: {
         }
         const matricula = input.matricula !== undefined ? input.matricula.trim().toUpperCase() : current.matricula;
         const nome = input.nome !== undefined ? input.nome.trim() : current.nome;
-        const regiao = input.regiao !== undefined ? input.regiao.trim() : current.regiao;
+        const filial = input.filial !== undefined ? input.filial.trim() : current.filial;
         const ativo = input.ativo !== undefined ? (input.ativo ? 1 : 0) : current.ativo;
         if (!matricula || !nome) {
             throw new AppError(400, 'Matrícula e nome do técnico não podem ficar vazios.', 'VALIDATION_ERROR');
@@ -102,7 +102,7 @@ export async function atualizarTecnico(db: AsyncDatabase, id: number, input: {
         if (dup) {
             throw new AppError(409, `Já existe outro técnico com a matrícula ${matricula}.`, 'DUPLICATE_MATRICULA');
         }
-        await db.run('UPDATE tecnicos SET matricula = ?, nome = ?, regiao = ?, ativo = ?, atualizado_em = ? WHERE id = ?', matricula, nome, regiao, ativo, nowIso(), id);
+        await db.run('UPDATE tecnicos SET matricula = ?, nome = ?, filial = ?, ativo = ?, atualizado_em = ? WHERE id = ?', matricula, nome, filial, ativo, nowIso(), id);
         return (await listarTecnicos(db)).find((t) => t.id === id)!;
     });
 }

@@ -141,7 +141,7 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
                 return Object.values(value).every(v => valid(v, depth + 1));
             return true;
         }
-        const stringFields = ['nome', 'username', 'password', 'novaSenha', 'perfil', 'codigo', 'unidade', 'matricula', 'regiao', 'justificativa', 'versaoEstoque'];
+        const stringFields = ['nome', 'username', 'password', 'novaSenha', 'perfil', 'codigo', 'unidade', 'matricula', 'filial', 'justificativa', 'versaoEstoque'];
         if (req.body !== undefined && (!req.body || typeof req.body !== 'object' || Array.isArray(req.body))) {
             return next(new AppError(400, 'Envie um objeto JSON.', 'INVALID_INPUT'));
         }

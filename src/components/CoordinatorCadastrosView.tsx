@@ -24,7 +24,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
   const [tecEditId, setTecEditId] = useState<number | null>(null);
   const [tecMatricula, setTecMatricula] = useState('');
   const [tecNome, setTecNome] = useState('');
-  const [tecRegiao, setTecRegiao] = useState('');
+  const [tecFilial, setTecFilial] = useState('');
 
   // Produtos
   const [itens, setItens] = useState<ItemProduto[]>([]);
@@ -104,16 +104,16 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
     e.preventDefault();
     try {
       if (tecEditId) {
-        await api.atualizarTecnico(tecEditId, { matricula: tecMatricula, nome: tecNome, regiao: tecRegiao });
+        await api.atualizarTecnico(tecEditId, { matricula: tecMatricula, nome: tecNome, filial: tecFilial });
         onNotify('Técnico atualizado.');
       } else {
-        await api.criarTecnico({ matricula: tecMatricula, nome: tecNome, regiao: tecRegiao });
+        await api.criarTecnico({ matricula: tecMatricula, nome: tecNome, filial: tecFilial });
         onNotify('Técnico cadastrado.');
       }
       setTecEditId(null);
       setTecMatricula('');
       setTecNome('');
-      setTecRegiao('');
+      setTecFilial('');
       await loadAll();
       onRefreshSummary();
     } catch (err) {
@@ -303,14 +303,14 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                 />
               </div>
               <div>
-                <label htmlFor="tec-regiao" className="block text-xs font-medium text-slate-700 mb-1">
-                  Região / Equipe
+                <label htmlFor="tec-filial" className="block text-xs font-medium text-slate-700 mb-1">
+                  Filial
                 </label>
                 <input
-                  id="tec-regiao"
-                  value={tecRegiao}
-                  onChange={(e) => setTecRegiao(e.target.value)}
-                  placeholder="Ex.: Zona Leste"
+                  id="tec-filial"
+                  value={tecFilial}
+                  onChange={(e) => setTecFilial(e.target.value)}
+                  placeholder="Ex.: Tianguá"
                   className="w-full h-9 px-3 text-sm border border-slate-300 rounded-md"
                 />
               </div>
@@ -330,7 +330,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                     setTecEditId(null);
                     setTecMatricula('');
                     setTecNome('');
-                    setTecRegiao('');
+                    setTecFilial('');
                   }}
                   className="h-9 px-3 text-xs font-medium text-slate-700 border border-slate-300 rounded-md cursor-pointer"
                 >
@@ -346,7 +346,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                 <tr className="bg-slate-100 border-b border-slate-200 font-semibold text-slate-700">
                   <th className="py-2.5 px-4">Matrícula</th>
                   <th className="py-2.5 px-3">Nome</th>
-                  <th className="py-2.5 px-3">Região</th>
+                  <th className="py-2.5 px-3">Filial</th>
                   <th className="py-2.5 px-3">Situação</th>
                   <th className="py-2.5 px-4 text-right">Ações</th>
                 </tr>
@@ -356,7 +356,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                   <tr key={t.id} className="hover:bg-slate-50">
                     <td className="py-2.5 px-4 font-mono tabular-nums font-semibold text-slate-900">{t.matricula}</td>
                     <td className="py-2.5 px-3 font-medium text-slate-900">{t.nome}</td>
-                    <td className="py-2.5 px-3 text-slate-600">{t.regiao || '—'}</td>
+                    <td className="py-2.5 px-3 text-slate-600">{t.filial || '—'}</td>
                     <td className="py-2.5 px-3">
                       <span className={t.ativo ? 'text-emerald-800 font-medium' : 'text-slate-500'}>
                         {t.ativo ? 'Ativo' : 'Inativo'}
@@ -369,7 +369,7 @@ export function CoordinatorCadastrosView({ onNotify, onRefreshSummary }: Coordin
                           setTecEditId(t.id);
                           setTecMatricula(t.matricula);
                           setTecNome(t.nome);
-                          setTecRegiao(t.regiao);
+                          setTecFilial(t.filial);
                         }}
                         className="text-xs font-medium text-[#0F4C81] hover:underline cursor-pointer"
                       >

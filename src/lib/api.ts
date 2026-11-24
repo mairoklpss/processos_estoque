@@ -163,9 +163,9 @@ export const api = {
 
   // Coordenador - Técnicos
   listarTecnicos: () => requestAllPages<Tecnico>('/api/coord/tecnicos'),
-  criarTecnico: (data: { matricula: string; nome: string; regiao: string }) =>
+  criarTecnico: (data: { matricula: string; nome: string; filial: string }) =>
     request<Tecnico>('/api/coord/tecnicos', { method: 'POST', body: JSON.stringify(data) }),
-  atualizarTecnico: (id: number, data: Partial<{ matricula: string; nome: string; regiao: string; ativo: boolean }>) =>
+  atualizarTecnico: (id: number, data: Partial<{ matricula: string; nome: string; filial: string; ativo: boolean }>) =>
     request<Tecnico>(`/api/coord/tecnicos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
 
   // Coordenador - Produtos

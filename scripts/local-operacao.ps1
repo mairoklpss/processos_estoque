@@ -1,5 +1,5 @@
 param(
- [ValidateSet('up','migrate','verify','test','start','check','backup','restore-backup','schema-drop-observacoes')][string]$Action='start',
+ [ValidateSet('up','migrate','verify','test','start','check','backup','restore-backup','schema-drop-observacoes','schema-rename-regiao','reset-usuario')][string]$Action='start',
  [string]$Source,
  [string]$InputPath,
  [string]$OutputPath,
@@ -35,7 +35,7 @@ $previous=@{};foreach($name in $names){$previous[$name]=[Environment]::GetEnviro
 try{
  $env:PG_APP_PASSWORD=Read-Key 'app';$app=[Uri]::EscapeDataString($env:PG_APP_PASSWORD)
  $env:PG_OPERACAO_PASSWORD=$null;$env:PG_MIGRATION_URL=$null;$env:PG_MIGRATION_PROFILE=$null
- if($Action -in @('up','migrate','verify','test','schema-drop-observacoes')){
+ if($Action -in @('up','migrate','verify','test','schema-drop-observacoes','schema-rename-regiao')){
   $env:PG_OPERACAO_PASSWORD=Read-Key 'admin';$admin=[Uri]::EscapeDataString($env:PG_OPERACAO_PASSWORD)
   $env:PG_MIGRATION_PROFILE='operacao';$env:PG_MIGRATION_URL="postgresql://postgres:${admin}@127.0.0.1:55433/brasilink_operacao"
  }
@@ -63,6 +63,13 @@ try{
    if($LASTEXITCODE -ne 0){throw 'Ensaio falhou; não cortar operação.'}
    & npx.cmd tsx scripts/postgres-app-role.ts
   }
+  'schema-rename-regiao'{
+   if(-not $OutputPath){throw 'Informe -OutputPath com o backup .pgdump.enc criado imediatamente antes (issue 03).'}
+   if(-not(Test-Path $OutputPath)){throw 'Backup informado não encontrado; rodar -Action backup primeiro.'}
+   $env:DATABASE_URL=$env:PG_MIGRATION_URL
+   & npx.cmd tsx scripts/pg-rename-regiao-filial.ts
+   if($LASTEXITCODE -ne 0){throw 'Migração de schema falhou; verificar backup antes de repetir.'}
+  }
   'schema-drop-observacoes'{
    if(-not $OutputPath){throw 'Informe -OutputPath com o backup .pgdump.enc criado imediatamente antes (issue 02).'}
    if(-not(Test-Path $OutputPath)){throw 'Backup informado não encontrado; rodar -Action backup primeiro.'}
@@ -79,6 +86,19 @@ try{
    if(-not $OutputPath){$extension=if($Action -eq 'backup'){'.pgdump.enc'}else{'.pgdump'};$OutputPath=Join-Path $root ('.local\operacao\backups\'+$stamp+$extension)}
    if($Action -eq 'backup'){& npx.cmd tsx scripts/postgres-backup.ts create --output $OutputPath}
    else{if(-not $InputPath){throw 'Informe InputPath.'};& npx.cmd tsx scripts/postgres-backup.ts restore --input $InputPath --output $OutputPath}
+  }
+  'reset-usuario'{
+   if(-not $Source){throw 'Informe -Source com o username a redefinir (ex.: coordenador).'}
+   $secureNova=Read-Host 'Nova senha (min 12 caracteres, com maiuscula, minuscula, numero e simbolo)' -AsSecureString
+   $pointerNova=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureNova)
+   try{$env:RESET_NOVA_SENHA=[Runtime.InteropServices.Marshal]::PtrToStringBSTR($pointerNova)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointerNova)}
+   $env:DATABASE_CLIENT='postgres';$env:DATABASE_TARGET='operacao';$env:DATABASE_URL="postgresql://brasilink_app:${app}@127.0.0.1:55433/brasilink_operacao"
+   $env:NODE_ENV='development'
+   & npx.cmd tsx scripts/reset-usuario.ts $Source
+   $code=$LASTEXITCODE
+   $env:RESET_NOVA_SENHA=$null
+   if($code -ne 0){throw 'Redefinicao de senha falhou; nenhuma alteracao feita.'}
+   Write-Output 'Senha redefinida; sessoes antigas revogadas. Entre com a nova senha.'
   }
   {$_ -in @('start','check')}{
    if($Action -eq 'start' -and -not $Development -and -not(Test-Path 'dist\index.html')){throw 'Execute npm run build antes de iniciar a operação estática.'}

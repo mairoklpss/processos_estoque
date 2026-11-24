@@ -31,3 +31,18 @@ test('O formulário de calcular separação não tem campo de observação', () 
   const separar = lerComponente('CoordinatorSepararView.tsx');
   assert.ok(!separar.includes('Observação (opcional)'), 'O campo "Observação (opcional)" ainda existe na aba de separar.');
 });
+
+// Issue 04: nenhum texto visível usa "Região" — o termo do projeto é "Filial" (glossário).
+test('Nenhuma tela exibe "Região"; filial é o termo visível', () => {
+  const violacoes = listarComponentes().filter((nome) => lerComponente(nome).includes('Regi'));
+  assert.deepEqual(
+    violacoes,
+    [],
+    'Componente(s) com texto "Região" na interface: ' + violacoes.join(', ') +
+      ' — o termo visível deve ser "Filial" (glossário).',
+  );
+  const cadastros = lerComponente('CoordinatorCadastrosView.tsx');
+  assert.ok(cadastros.includes('Filial'), 'A aba de cadastros deve exibir o rótulo "Filial".');
+  const separar = lerComponente('CoordinatorSepararView.tsx');
+  assert.ok(separar.includes('Sem filial'), 'A lista de técnicos deve usar "Sem filial".');
+});
