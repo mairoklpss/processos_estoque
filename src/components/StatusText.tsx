@@ -31,7 +31,7 @@ export function ComparacaoLimitesLabel({ comparacao }: { comparacao: ComparacaoL
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-800">
         <AlertTriangle className="w-3.5 h-3.5 text-amber-700 shrink-0" aria-hidden="true" />
-        <span>Uso abaixo do mínimo</span>
+        <span>Demanda semanal abaixo do mínimo</span>
       </span>
     );
   }
@@ -39,14 +39,14 @@ export function ComparacaoLimitesLabel({ comparacao }: { comparacao: ComparacaoL
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium text-red-800">
         <AlertTriangle className="w-3.5 h-3.5 text-red-700 shrink-0" aria-hidden="true" />
-        <span>Uso acima do máximo</span>
+        <span>Demanda semanal acima do máximo</span>
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800">
       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" aria-hidden="true" />
-      <span>Uso dentro dos limites</span>
+      <span>Demanda semanal dentro dos limites</span>
     </span>
   );
 }

@@ -509,6 +509,7 @@ export function CoordinatorSepararView({
                       Qtd. possível separar
                     </th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Uso mês ({separacao.competencia})</th>
+                    <th className="py-2.5 px-3 text-right whitespace-nowrap" title="Uso mensal ÷ 3,1428">Dem. semanal</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Dem. diária (22d)</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Mín. efetivo</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Máx. global</th>
@@ -558,8 +559,12 @@ export function CoordinatorSepararView({
                           {item.usoMesAnterior}
                         </td>
 
+                        <td className="py-3 px-3 text-right font-mono tabular-nums text-slate-800 whitespace-nowrap">
+                          {Math.round(item.demandaSemanalExata)}
+                        </td>
+
                         <td className="py-3 px-3 text-right font-mono tabular-nums text-slate-600 whitespace-nowrap">
-                          {item.demandaDiariaInformativa.toFixed(2)}/dia
+                          {Math.round(item.demandaDiariaInformativa)}/dia
                         </td>
 
                         <td className="py-3 px-3 text-right whitespace-nowrap">
@@ -608,7 +613,7 @@ export function CoordinatorSepararView({
                           {item.consumoAtipico && (
                             <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-red-700">
                               <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                              <span>Consumo atípico (&gt; máximo global)</span>
+                              <span>Consumo semanal atípico (&gt; máximo da semana)</span>
                             </div>
                           )}
                           {item.semConsumo && (

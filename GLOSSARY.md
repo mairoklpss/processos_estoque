@@ -31,3 +31,7 @@ _Avoid_: alvo kit, regra semanal provisória
 **Mínimo (alerta)**:
 Valor derivado do consumo semanal (uso do mês ÷ 3,1428, teto) ou override manual por técnico; serve como alerta de nível baixo e régua de leitura — não define mais a quantidade solicitada.
 _Avoid_: alvo de reposição, mínimo obrigatório
+
+**Régua (alertas)**:
+Comparação da demanda semanal (uso do mês fechado ÷ 3,1428) com os limites semanais (mínimo efetivo e máximo global) — responde "o consumo médio por semana cabe no que o inventário da semana permite?". Acima do máximo = consumo semanal atípico; entre mínimo e máximo = dentro dos limites; abaixo do mínimo = consumo baixo.
+_Avoid_: comparar uso mensal com os limites semanais

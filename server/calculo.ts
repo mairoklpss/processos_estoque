@@ -74,15 +74,17 @@ export function calcularPropostaItem(input: CalculoItemInput): CalculoItemResult
   const quantidadeDisponivel = Math.min(quantidadeSolicitada, estoqueAtual);
   const faltante = quantidadeSolicitada - quantidadeDisponivel;
 
+  // Régua (issue 18): compara a demanda SEMANAL (uso mensal ÷ 3,1428) com os limites
+  // SEMANAIS (mínimo efetivo e máximo global) — mesma unidade de tempo nos dois lados.
   let comparacaoLimites: ComparacaoLimites = 'DENTRO_LIMITES';
-  if (usoMesAnterior < minimoEfetivo) {
+  if (demandaSemanalRaw < minimoEfetivo) {
     comparacaoLimites = 'ABAIXO_MINIMO';
-  } else if (usoMesAnterior > limiteMaximo) {
+  } else if (demandaSemanalRaw > limiteMaximo) {
     comparacaoLimites = 'ACIMA_MAXIMO';
   }
 
-  // Consumo atípico: somente quando o consumo ultrapassar o máximo global do produto
-  const consumoAtipico = usoMesAnterior > limiteMaximo;
+  // Consumo atípico: a demanda semanal estimada supera o máximo global da semana
+  const consumoAtipico = demandaSemanalRaw > limiteMaximo;
   const semSaldoAlmoxarifado = quantidadeSolicitada > 0 && estoqueAtual <= 0;
   const alertaMinimoMaiorMaximo = minimoManual !== null && minimoManual > limiteMaximo;
 

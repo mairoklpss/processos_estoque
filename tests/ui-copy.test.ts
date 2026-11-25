@@ -99,6 +99,22 @@ test('Produtos: sem formulário livre, busca IXC preparada e Máx. global editá
   assert.ok(cadastros.includes('handleSalvarMaximo'), 'Ação de salvar Máx. global ausente.');
 });
 
+// Issue 18: a régua compara demanda semanal (uso ÷ 3,1428) com os limites semanais;
+// textos antigos 'Uso ...' e a coluna 'Dem. semanal' garantem a leitura correta.
+test('Régua do Coordenador: textos de demanda semanal e coluna Dem. semanal', () => {
+  const separar = lerComponente('CoordinatorSepararView.tsx');
+  assert.ok(separar.includes('Dem. semanal'), 'Coluna "Dem. semanal" ausente na régua.');
+  assert.ok(!separar.includes('Consumo atípico'), 'Texto antigo "Consumo atípico" ainda presente na régua.');
+  // Dem. semanal e Dem. diária exibidas como números inteiros (arredondadas)
+  assert.ok(separar.includes('Math.round(item.demandaSemanalExata)'), 'Dem. semanal deve ser arredondada para inteiro.');
+  assert.ok(separar.includes('Math.round(item.demandaDiariaInformativa)'), 'Dem. diária deve ser arredondada para inteiro.');
+  const status = lerComponente('StatusText.tsx');
+  assert.ok(status.includes('Demanda semanal abaixo do mínimo'), 'Texto do alerta de abaixo do mínimo ausente.');
+  assert.ok(status.includes('Demanda semanal acima do máximo'), 'Texto do alerta de acima do máximo ausente.');
+  assert.ok(status.includes('Demanda semanal dentro dos limites'), 'Texto do alerta de dentro dos limites ausente.');
+  assert.ok(!/Uso (abaixo|acima|dentro)/.test(status), 'Textos antigos de uso mensal ainda presentes nos alertas.');
+});
+
 // Issue 16: na régua do Coordenador, falta de estoque aparece como aviso vermelho;
 // a palavra "Snapshots" não aparece em nenhum texto visível.
 test('Régua do Coordenador: aviso de estoque insuficiente; sem a palavra snapshots', () => {

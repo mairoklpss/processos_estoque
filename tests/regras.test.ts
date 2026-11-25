@@ -128,7 +128,7 @@ test('Demanda diária = uso / 22 somente informativa e nunca altera o cálculo',
   assert.equal(r.quantidadeSolicitada, 48);
 });
 
-test('Alertas de régua (abaixo, dentro, acima) e consumo atípico apenas acima do máximo global', () => {
+test('Régua: demanda semanal (uso ÷ 3,1428) comparada com os limites semanais (mínimo/máximo)', () => {
   const abaixo = calcularPropostaItem({
     usoMesAnterior: 8,
     minimoManual: 12,
@@ -136,26 +136,29 @@ test('Alertas de régua (abaixo, dentro, acima) e consumo atípico apenas acima 
     saldoTecnico: 0,
     estoqueAtual: 20,
   });
+  // demanda semanal = 8 / 3.1428 = 2.5456 < mínimo 12
   assert.equal(abaixo.comparacaoLimites, 'ABAIXO_MINIMO');
   assert.equal(abaixo.consumoAtipico, false);
 
   const dentro = calcularPropostaItem({
-    usoMesAnterior: 30,
+    usoMesAnterior: 40,
     minimoManual: 10,
     limiteMaximo: 30,
     saldoTecnico: 0,
     estoqueAtual: 20,
   });
+  // demanda semanal = 40 / 3.1428 = 12.7271, dentro de [10, 30]
   assert.equal(dentro.comparacaoLimites, 'DENTRO_LIMITES');
   assert.equal(dentro.consumoAtipico, false);
 
   const acima = calcularPropostaItem({
-    usoMesAnterior: 31,
+    usoMesAnterior: 100,
     minimoManual: 10,
     limiteMaximo: 30,
     saldoTecnico: 0,
     estoqueAtual: 0,
   });
+  // demanda semanal = 100 / 3.1428 = 31.8181 > máximo 30 → atípico
   assert.equal(acima.comparacaoLimites, 'ACIMA_MAXIMO');
   assert.equal(acima.consumoAtipico, true);
   assert.equal(acima.semSaldoAlmoxarifado, true);
