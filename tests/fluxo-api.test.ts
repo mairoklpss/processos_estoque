@@ -62,7 +62,8 @@ test('Fluxo completo: rascunho invisível ao estoque, ajuste com justificativa, 
     assert.equal(calcRes.status, 201);
     const sep = (await calcRes.json()) as SeparacaoCoordenadorDTO;
     assert.equal(sep.status, 'RASCUNHO');
-    assert.equal(sep.competencia, '2026-10');
+    assert.equal(sep.competencia, '2026-11-15'); // competência semanal (dom 15 a sáb 21/11/2026, data fixa do teste)
+    assert.equal(sep.competenciaLabel, '15 a 21 de Novembro');
 
     // 1b. Observação foi removida da rodada: payload com o campo é recusado de forma clara (issue 02)
     const calcComObsRes = await fetch(`${srv.baseUrl}/api/coord/separacoes/calcular`, {

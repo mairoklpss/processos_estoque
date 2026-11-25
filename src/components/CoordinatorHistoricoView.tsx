@@ -80,7 +80,7 @@ export function CoordinatorHistoricoView({ onOpenSeparacao, onNotify }: Coordina
                 aria-hidden="true"
                 className="w-full h-9 px-3 text-sm font-mono bg-white border border-slate-300 rounded-md flex items-center justify-between pointer-events-none"
               >
-                <span className="tabular-nums">{formatCompetenciaBR(filtroCompetencia) || 'DD/MM/AAAA'}</span>
+                <span className="tabular-nums">{formatCompetenciaBR(filtroCompetencia) || 'MM/AAAA'}</span>
                 <Calendar className="w-3.5 h-3.5 text-slate-400" />
               </div>
               <input
@@ -142,7 +142,7 @@ export function CoordinatorHistoricoView({ onOpenSeparacao, onNotify }: Coordina
       <section className="bg-white border border-slate-200 rounded-lg overflow-hidden">
         <div className="px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
           <h2 className="text-sm font-bold text-slate-900">
-            Histórico de separações e snapshots ({lista.length})
+            Histórico de separações ({lista.length})
           </h2>
           <span className="text-xs text-slate-500">
             Valores preservados conforme a regra vigente no cálculo

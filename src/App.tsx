@@ -13,13 +13,14 @@ import { CoordinatorCadastrosView } from './components/CoordinatorCadastrosView.
 import { CoordinatorHistoricoView } from './components/CoordinatorHistoricoView.tsx';
 import { CoordinatorSepararView } from './components/CoordinatorSepararView.tsx';
 import { EstoqueFilaView } from './components/EstoqueFilaView.tsx';
+import { EstoqueHistoricoView } from './components/EstoqueHistoricoView.tsx';
 import { EstoquePendenciasView } from './components/EstoquePendenciasView.tsx';
 import { LoginView } from './components/LoginView.tsx';
 import { api, setOnSessionExpired } from './lib/api.ts';
 import type { AuthSessionResponse, DashboardSummaryDTO } from './shared/types.ts';
 
 type CoordNav = 'separar' | 'historico' | 'cadastros';
-type EstoqueNav = 'fila' | 'pendencias';
+type EstoqueNav = 'fila' | 'pendencias' | 'historico';
 
 export default function App() {
   const [session, setSession] = useState<AuthSessionResponse | null>(null);
@@ -200,6 +201,18 @@ export default function App() {
                 <AlertTriangle className="w-4 h-4 shrink-0" aria-hidden="true" />
                 <span>Pendências</span>
               </button>
+              <button
+                type="button"
+                onClick={() => setEstoqueNav('historico')}
+                className={`w-full h-10 px-3 flex items-center gap-2.5 text-sm font-medium rounded-md transition-colors cursor-pointer ${
+                  estoqueNav === 'historico'
+                    ? 'bg-blue-50 text-[#0F4C81] font-semibold'
+                    : 'text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                <History className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <span>Histórico</span>
+              </button>
             </>
           )}
         </nav>
@@ -268,6 +281,7 @@ export default function App() {
                     [
                       ['fila', 'Fila do Estoque'],
                       ['pendencias', 'Pendências'],
+                      ['historico', 'Histórico'],
                     ] as const
                   ).map(([key, label]) => (
                     <button
@@ -387,6 +401,10 @@ export default function App() {
 
           {!isCoord && estoqueNav === 'pendencias' && (
             <EstoquePendenciasView onNotify={notify} />
+          )}
+
+          {!isCoord && estoqueNav === 'historico' && (
+            <EstoqueHistoricoView onNotify={notify} />
           )}
         </main>
       </div>

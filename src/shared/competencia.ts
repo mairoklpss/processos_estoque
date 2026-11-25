@@ -8,10 +8,10 @@ export function competenciaAtualBrasilia(agora: Date = new Date()): string {
     }).format(agora);
 }
 
-// Exibição da competência como DD/MM/AAAA (primeiro dia do mês), no lugar do nome por extenso.
-// Ex.: '2026-11' → '01/11/2026'. Valor inesperado volta como veio (nunca quebra a tela).
+// Exibição da competência como MM/AAAA (só mês — o filtro é mensal), no lugar do nome por extenso.
+// Ex.: '2026-11' → '11/2026'. Valor inesperado volta como veio (nunca quebra a tela).
 export function formatCompetenciaBR(competencia: string): string {
     const m = /^([0-9]{4})-([0-9]{2})$/.exec(competencia ?? '');
     if (!m) return competencia ?? '';
-    return `01/${m[2]}/${m[1]}`;
+    return `${m[2]}/${m[1]}`;
 }

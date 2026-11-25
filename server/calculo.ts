@@ -1,6 +1,6 @@
 import type { ComparacaoLimites, MinimoOrigem } from '../src/shared/types.ts';
 
-export const REGRA_VERSAO = 'SEMANAL_PROVISORIA_V1';
+export const REGRA_VERSAO = 'REPOSICAO_ATE_MAXIMO_V2';
 export const DIVISOR_SEMANAL = 3.1428;
 export const DIAS_UTEIS_INFORMATIVOS = 22;
 
@@ -62,10 +62,14 @@ export function calcularPropostaItem(input: CalculoItemInput): CalculoItemResult
   const minimoOrigem: MinimoOrigem = minimoManual !== null ? 'MANUAL' : 'DERIVADO';
   const minimoEfetivo = minimoManual !== null ? minimoManual : alvoBase;
 
+  // Alvo do mínimo derivado (mantido para auditoria/snapshot): teto do mínimo efetivo pelo máximo.
+  // Não define mais a quantidade solicitada — a regra vigente repõe até o máximo (issue 12).
   const alvoKit = Math.min(limiteMaximo, Math.max(alvoBase, minimoEfetivo));
 
   const semConsumo = usoMesAnterior === 0;
-  const quantidadeSolicitada = semConsumo ? 0 : Math.max(alvoKit - saldoTecnico, 0);
+  // Reposição até o máximo: cada técnico solicita 1x por semana e recebe o que falta para
+  // chegar ao máximo (saldo 15, máximo 60 => 45). O mínimo segue como alerta, não como alvo.
+  const quantidadeSolicitada = semConsumo ? 0 : Math.max(limiteMaximo - saldoTecnico, 0);
 
   const quantidadeDisponivel = Math.min(quantidadeSolicitada, estoqueAtual);
   const faltante = quantidadeSolicitada - quantidadeDisponivel;

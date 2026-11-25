@@ -512,7 +512,6 @@ export function CoordinatorSepararView({
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Dem. diária (22d)</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Mín. efetivo</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Máx. global</th>
-                    <th className="py-2.5 px-3 text-right whitespace-nowrap">Alvo kit</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Saldo téc.</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Solicitada</th>
                     <th className="py-2.5 px-3 text-right whitespace-nowrap">Almox.</th>
@@ -576,10 +575,6 @@ export function CoordinatorSepararView({
                           {item.limiteMaximo}
                         </td>
 
-                        <td className="py-3 px-3 text-right font-mono tabular-nums font-semibold text-slate-900 whitespace-nowrap">
-                          {item.alvoKit}
-                        </td>
-
                         <td className="py-3 px-3 text-right font-mono tabular-nums text-slate-800 whitespace-nowrap">
                           {item.saldoTecnico}
                         </td>
@@ -626,6 +621,12 @@ export function CoordinatorSepararView({
                             <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-red-700">
                               <AlertTriangle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                               <span>Sem saldo no almoxarifado</span>
+                            </div>
+                          )}
+                          {item.faltante > 0 && !item.semSaldoAlmoxarifado && (
+                            <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-red-700">
+                              <AlertTriangle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                              <span>Estoque insuficiente</span>
                             </div>
                           )}
                           {item.alertaMinimoMaiorMaximo && (

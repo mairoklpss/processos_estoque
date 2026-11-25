@@ -18,12 +18,12 @@ test('Competência corrente trata a virada de ano em Brasília', () => {
     assert.equal(competenciaAtualBrasilia(new Date('2027-01-01T03:00:00Z')), '2027-01');
 });
 
-// Exibição da competência em formato numérico DD/MM/AAAA (primeiro dia do mês),
-// no lugar do nome por extenso (ex.: "Novembro/2026" → "01/11/2026").
-test('Competência exibida como DD/MM/AAAA (primeiro dia do mês), com fallback seguro', () => {
-    assert.equal(formatCompetenciaBR('2026-11'), '01/11/2026');
-    assert.equal(formatCompetenciaBR('2027-01'), '01/01/2027');
-    assert.equal(formatCompetenciaBR('2025-02'), '01/02/2025');
+// Exibição da competência em formato numérico MM/AAAA (só mês, sem dia fictício),
+// no lugar do nome por extenso (ex.: "Novembro/2026" → "11/2026").
+test('Competência exibida como MM/AAAA (só mês), com fallback seguro', () => {
+    assert.equal(formatCompetenciaBR('2026-11'), '11/2026');
+    assert.equal(formatCompetenciaBR('2027-01'), '01/2027');
+    assert.equal(formatCompetenciaBR('2025-02'), '02/2025');
     // valores inesperados não quebram a tela: volta como vieram
     assert.equal(formatCompetenciaBR('formato-estranho'), 'formato-estranho');
     assert.equal(formatCompetenciaBR(''), '');

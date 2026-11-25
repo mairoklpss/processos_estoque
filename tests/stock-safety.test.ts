@@ -68,16 +68,16 @@ test('QA-01: alteração de estoque exige expected inteiro estrito dentro do int
   } finally { await f.close(); }
 });
 
-test('QA-02: dois pedidos 8+8; hash antigo rejeitado, refresh reduz a zero, confirmação zero sem falta fictícia', async () => {
+test('QA-02: dois pedidos 10+10; hash antigo rejeitado, refresh reduz a zero, confirmação zero sem falta fictícia', async () => {
   const f = await fixture(); try {
     const first = await f.request(); const second = await f.request();
-    assert.equal(first.itens[0].quantidadeSolicitada, 8);
-    assert.equal(second.itens[0].quantidadeSolicitada, 8);
-    await f.deliver(first, 8);
-    await assert.rejects(f.deliver(second, 8), error(409, 'STALE_STOCK_VERSION'));
+    assert.equal(first.itens[0].quantidadeSolicitada, 10); // reposição até o máximo (10 − saldo 0)
+    assert.equal(second.itens[0].quantidadeSolicitada, 10);
+    await f.deliver(first, 10);
+    await assert.rejects(f.deliver(second, 10), error(409, 'STALE_STOCK_VERSION'));
     const fresh = await obterDetalheEstoque(f.db, second.id);
     assert.notEqual(fresh.versaoEstoque, second.versaoEstoque);
-    assert.equal(fresh.itens[0].quantidadeSolicitada, 0);
+    assert.equal(fresh.itens[0].quantidadeSolicitada, 0); // saldo 10 atingiu o máximo => nada a repor
     assert.equal(fresh.itens[0].quantidadeASeparar, 0);
     assert.equal((await listarFilaEstoque(f.db))[0].totalUnidadesASeparar, 0);
     await assert.rejects(f.deliver(fresh, 8), error(400, 'EXCEEDS_REQUESTED'));
@@ -85,13 +85,13 @@ test('QA-02: dois pedidos 8+8; hash antigo rejeitado, refresh reduz a zero, conf
     assert.equal(done.status, 'SEPARADA');
     assert.equal(done.itens[0].quantidadeSolicitada, 0);
     assert.equal(done.itens[0].quantidadeEntregue, 0);
-    assert.equal(await f.balance(), 8);
-    assert.equal(await f.warehouse(), 92);
+    assert.equal(await f.balance(), 10);
+    assert.equal(await f.warehouse(), 90);
     assert.deepEqual(await listarPendencias(f.db), []);
     const item = await f.db.get('SELECT * FROM separacao_itens WHERE id=?', second.itens[0].id);
-    assert.equal(item.saldo_tecnico_snapshot, 8);
+    assert.equal(item.saldo_tecnico_snapshot, 10);
     assert.equal(item.quantidade_solicitada, 0);
-    assert.equal(item.quantidade_calculada_original, 8);
+    assert.equal(item.quantidade_calculada_original, 10);
     assert.match(item.ajuste_justificativa, /Revalidação automática/);
     assert.ok(item.ajustado_em);
     assert.deepEqual(await listarFilaEstoque(f.db), []);
@@ -106,7 +106,7 @@ test('QA-02: hash inclui saldo técnico mesmo se almoxarifado não mudar', async
     assert.equal(await f.warehouse(), 100);
     const fresh = await obterDetalheEstoque(f.db, old.id);
     assert.notEqual(fresh.versaoEstoque, old.versaoEstoque);
-    assert.equal(fresh.itens[0].quantidadeSolicitada, 5);
+    assert.equal(fresh.itens[0].quantidadeSolicitada, 7); // 10 − saldo 3
     await assert.rejects(f.deliver(old, 0), error(409, 'STALE_STOCK_VERSION'));
   } finally { await f.close(); }
 });
@@ -127,7 +127,7 @@ test('QA-02: ajuste manual é preservado; pendência considera apenas demanda ef
     assert.match(item.ajuste_justificativa, /QA ajuste manual autorizado/);
     assert.match(item.ajuste_justificativa, /Revalidação automática/);
     assert.equal(item.alvo_kit, 8);
-    assert.equal(item.quantidade_calculada_original, 8);
+    assert.equal(item.quantidade_calculada_original, 10); // cálculo automático novo: 10 − saldo 0
     assert.equal(await f.balance(), 4);
     assert.equal(await f.warehouse(), 96);
   } finally { await f.close(); }
@@ -137,13 +137,13 @@ test('QA-02: saldo menor que snapshot não aumenta pedido autorizado', async () 
   const f = await fixture(); try {
     await f.db.run('INSERT INTO saldos_tecnicos (tecnico_id,item_id,quantidade,atualizado_em) VALUES (1,1,3,?)', ts);
     const old = await f.request();
-    assert.equal(old.itens[0].quantidadeSolicitada, 5);
+    assert.equal(old.itens[0].quantidadeSolicitada, 7); // 10 − saldo 3
     await f.db.run('UPDATE saldos_tecnicos SET quantidade=0 WHERE tecnico_id=1 AND item_id=1');
     const fresh = await obterDetalheEstoque(f.db, old.id);
-    assert.equal(fresh.itens[0].quantidadeSolicitada, 5);
-    await assert.rejects(f.deliver(fresh, 6), error(400, 'EXCEEDS_REQUESTED'));
-    await f.deliver(fresh, 5);
-    assert.equal(await f.balance(), 5);
+    assert.equal(fresh.itens[0].quantidadeSolicitada, 7); // saldo menor não AUMENTA o pedido autorizado
+    await assert.rejects(f.deliver(fresh, 8), error(400, 'EXCEEDS_REQUESTED'));
+    await f.deliver(fresh, 7);
+    assert.equal(await f.balance(), 7);
   } finally { await f.close(); }
 });
 

@@ -155,6 +155,7 @@ export interface SeparacaoItemEstoqueDTO {
   unidade: string;
   quantidadeSolicitada: number;
   quantidadeASeparar: number;
+  estoqueDisponivel: number;
   quantidadeEntregue: number | null;
 }
 

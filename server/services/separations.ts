@@ -4,7 +4,7 @@ import type { DashboardSummaryDTO, ItemProduto, ParametroTecnicoItem, PendenciaD
 import { calcularPropostaItem, recalcularDisponibilidade, REGRA_VERSAO } from '../calculo.ts';
 import { hashPassword, verifyPassword } from '../db.ts';
 import type { AsyncDatabase } from '../data-access.ts';
-import { getClosedPreviousMonth, nowIso } from '../periodo.ts';
+import { getClosedPreviousMonth, getSemanaAtual, nowIso } from '../periodo.ts';
 import { AppError, AMBIENTE_LABEL, SESSION_TTL_HOURS, type SessionUser } from './common.ts';
 
 
@@ -94,6 +94,7 @@ export async function calcularSeparacaoRascunho(db: AsyncDatabase, user: Session
         throw new AppError(400, 'Não há produtos ativos cadastrados para calcular a separação.', 'NO_ACTIVE_ITEMS');
     }
     const periodo = getClosedPreviousMonth(now);
+    const semana = getSemanaAtual(now); // tag da separação (issue 17); consumo segue do mês fechado anterior
     const ts = now.toISOString();
     const minimosRows = await db.all('SELECT item_id, minimo_manual FROM minimos_tecnicos WHERE tecnico_id = ?', tecnicoId) as Array<{
         item_id: number;
@@ -116,13 +117,13 @@ export async function calcularSeparacaoRascunho(db: AsyncDatabase, user: Session
         };
         const seqNum = String(seqRow.c + 1).padStart(4, '0');
         const randSuffix = crypto.randomBytes(2).toString('hex').toUpperCase();
-        const codigo = `SEP-${periodo.competencia.replace('-', '')}-${seqNum}-${randSuffix}`;
+        const codigo = `SEP-${semana.competencia.replaceAll('-', '')}-${seqNum}-${randSuffix}`;
         const sepRes = await db.run(`
         INSERT INTO separacoes (
           codigo, tecnico_id, tecnico_nome_snapshot, competencia, competencia_label,
           regra_versao, status, calculado_por_id, calculado_por_nome, calculado_em
         ) VALUES (?, ?, ?, ?, ?, ?, 'RASCUNHO', ?, ?, ?)
-      `, codigo, tecnico.id, tecnico.nome, periodo.competencia, periodo.label, REGRA_VERSAO, user.id, user.nome, ts);
+      `, codigo, tecnico.id, tecnico.nome, semana.competencia, semana.label, REGRA_VERSAO, user.id, user.nome, ts);
         const separacaoId = Number(sepRes.insertId);
         const insertItemStmt = `
       INSERT INTO separacao_itens (
@@ -268,15 +269,39 @@ export async function listarSeparacoesCoordenador(db: AsyncDatabase, filtros?: {
     competencia?: string;
     status?: StatusSeparacao;
 }, page?: Page): Promise<SeparacaoResumoCoordenadorDTO[]> {
+    return listarSeparacoes(db, filtros, page, false);
+}
+
+// Issue 15: histórico para o perfil ESTOQUE — mesmo serviço, mas rascunhos são invisíveis.
+export async function listarSeparacoesEstoque(db: AsyncDatabase, filtros?: {
+    tecnicoId?: number;
+    competencia?: string;
+    status?: StatusSeparacao;
+}, page?: Page): Promise<SeparacaoResumoCoordenadorDTO[]> {
+    if (filtros?.status === 'RASCUNHO') {
+        throw new AppError(400, 'Rascunhos não estão disponíveis para o estoque.', 'VALIDATION_ERROR');
+    }
+    return listarSeparacoes(db, filtros, page, true);
+}
+
+async function listarSeparacoes(db: AsyncDatabase, filtros: {
+    tecnicoId?: number;
+    competencia?: string;
+    status?: StatusSeparacao;
+} | undefined, page: Page | undefined, ocultarRascunho: boolean): Promise<SeparacaoResumoCoordenadorDTO[]> {
     const conditions: string[] = [];
     const params: unknown[] = [];
+    if (ocultarRascunho) {
+        conditions.push("s.status != 'RASCUNHO'");
+    }
     if (filtros?.tecnicoId) {
         conditions.push('s.tecnico_id = ?');
         params.push(filtros.tecnicoId);
     }
     if (filtros?.competencia) {
-        conditions.push('s.competencia = ?');
-        params.push(filtros.competencia);
+        // Aceita registros mensais antigos ('AAAA-MM') e semanais ('AAAA-MM-DD') iniciados no mês escolhido
+        conditions.push("(s.competencia = ? OR (length(s.competencia) > 7 AND substr(s.competencia, 1, 7) = ?))");
+        params.push(filtros.competencia, filtros.competencia);
     }
     if (filtros?.status) {
         conditions.push('s.status = ?');

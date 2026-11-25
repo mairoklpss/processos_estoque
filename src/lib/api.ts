@@ -254,4 +254,12 @@ export const api = {
       body: JSON.stringify(payload),
     }),
   listarPendenciasEstoque: () => requestAllPages<PendenciaDTO>('/api/estoque/pendencias'),
+  listarSeparacoesEstoque: (filtros?: { tecnicoId?: string; competencia?: string; status?: StatusSeparacao | '' }) => {
+    const params = new URLSearchParams();
+    if (filtros?.tecnicoId) params.set('tecnicoId', filtros.tecnicoId);
+    if (filtros?.competencia) params.set('competencia', filtros.competencia);
+    if (filtros?.status) params.set('status', filtros.status);
+    const qs = params.toString();
+    return requestAllPages<SeparacaoResumoCoordenadorDTO>(`/api/estoque/separacoes${qs ? `?${qs}` : ''}`);
+  },
 };

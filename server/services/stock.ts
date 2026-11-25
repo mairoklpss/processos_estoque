@@ -140,6 +140,8 @@ export async function obterDetalheEstoque(db: AsyncDatabase, separacaoId: number
             quantidadeASeparar: sep.status === 'SEPARADA'
                 ? r.quantidade_entregue ?? 0
                 : Math.min(quantidadeEfetiva(r), Math.max(r.estoque_atual, 0)),
+            // Issue 13: estoque total do item no momento da consulta (o "como um todo", não limitado ao pedido)
+            estoqueDisponivel: Math.max(r.estoque_atual, 0),
             quantidadeEntregue: r.quantidade_entregue,
         })),
     };

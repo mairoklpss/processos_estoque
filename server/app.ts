@@ -6,7 +6,7 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import type { PerfilUsuario, StatusSeparacao } from '../src/shared/types.ts';
 import type { DBInstance } from './db.ts';
 import { adaptSqlite, type AsyncDatabase } from './data-access.ts';
-import { AMBIENTE_LABEL, AppError, ajustarItemRascunho, atualizarItem, atualizarTecnico, atualizarUsuario, calcularSeparacaoRascunho, confirmarEntregaEstoque, criarItem, criarTecnico, criarUsuario, definirMinimoManual, enviarSolicitacaoEstoque, gerarCsvSeparacaoSimples, getDashboardSummary, getUsuarioBySession, listarFilaEstoque, listarItens, listarParametrosTecnico, listarPendencias, listarSeparacoesCoordenador, listarTecnicos, listarUsuarios, loginUsuario, logoutSessao, obterDetalheEstoque, obterSeparacaoCoordenador, excluirRascunho, redefinirSenhaUsuario, type SessionUser, } from './services.ts';
+import { AMBIENTE_LABEL, AppError, ajustarItemRascunho, atualizarItem, atualizarTecnico, atualizarUsuario, calcularSeparacaoRascunho, confirmarEntregaEstoque, criarItem, criarTecnico, criarUsuario, definirMinimoManual, enviarSolicitacaoEstoque, gerarCsvSeparacaoSimples, getDashboardSummary, getUsuarioBySession, listarFilaEstoque, listarItens, listarParametrosTecnico, listarPendencias, listarSeparacoesCoordenador, listarSeparacoesEstoque, listarTecnicos, listarUsuarios, loginUsuario, logoutSessao, obterDetalheEstoque, obterSeparacaoCoordenador, excluirRascunho, redefinirSenhaUsuario, type SessionUser, } from './services.ts';
 import { buscarTecnicosIxc, buscarItensIxc } from './ixc.ts';
 const instance = process.env.APP_INSTANCE ?? 'operacao';
 if (!['operacao', 'homologacao', 'smoke'].includes(instance)) throw new Error('APP_INSTANCE inválida.');
@@ -469,6 +469,17 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
         }
     });
     // ---------------- ESTOQUE ROUTES (ESTRITAMENTE ISOLADAS) ----------------
+    app.get('/api/estoque/separacoes', requireAuth, requireRole('ESTOQUE'), async (req, res, next) => {
+        try {
+            const tecnicoId = req.query.tecnicoId ? Number(req.query.tecnicoId) : undefined;
+            const competencia = req.query.competencia ? String(req.query.competencia) : undefined;
+            const status = req.query.status ? (String(req.query.status) as StatusSeparacao) : undefined;
+            res.json(await listarSeparacoesEstoque(db, { tecnicoId, competencia, status }, getPage(req.query)));
+        }
+        catch (err) {
+            next(err);
+        }
+    });
     app.get('/api/estoque/fila', requireAuth, requireRole('ESTOQUE'), async (_req, res, next) => {
         try {
             res.json(await listarFilaEstoque(db, getPage(_req.query)));

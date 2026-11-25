@@ -47,6 +47,19 @@ test('Nenhuma tela exibe "Região"; filial é o termo visível', () => {
   assert.ok(separar.includes('Sem filial'), 'A lista de técnicos deve usar "Sem filial".');
 });
 
+// Issue 14: Qtd. solicitada em destaque azul; issue 13: coluna "Qtd. disponível no estoque"
+// mostrando o estoque total do snapshot (não mais o valor limitado ao pedido).
+test('Fila do estoque: solicitada em azul e coluna de estoque total', () => {
+  const fila = lerComponente('EstoqueFilaView.tsx');
+  assert.ok(fila.includes('Qtd. disponível no estoque'), 'Rótulo "Qtd. disponível no estoque" ausente.');
+  assert.ok(!fila.includes('p/ separar'), 'Rótulo antigo "p/ separar" ainda presente.');
+  assert.ok(
+    /<td className="[^"\n]*text-\[#0F4C81\][^"\n]*"[^>]*>\s*\{item\.quantidadeSolicitada\}/.test(fila),
+    'A célula da Qtd. solicitada não está em destaque azul.',
+  );
+  assert.ok(fila.includes('item.estoqueDisponivel'), 'A coluna deve mostrar o estoque total do snapshot (item.estoqueDisponivel).');
+});
+
 // Issue 05 (ampliada): técnicos chegam do IXC — sem cadastro livre na interface; busca por ID ou nome
 // com adição por confirmação fica preparada (desligada até a API IXC existir); coluna mostra "ID IXC".
 test('Técnicos: sem formulário livre, busca IXC preparada (ID ou nome) e coluna ID IXC', () => {
@@ -84,4 +97,16 @@ test('Produtos: sem formulário livre, busca IXC preparada e Máx. global editá
   assert.ok(cadastros.includes('Disponível quando a integração IXC for ativada'), 'Aviso da integração IXC ausente.');
   assert.ok(cadastros.includes('Máx. global'), 'Edição de Máx. global deve continuar existindo.');
   assert.ok(cadastros.includes('handleSalvarMaximo'), 'Ação de salvar Máx. global ausente.');
+});
+
+// Issue 16: na régua do Coordenador, falta de estoque aparece como aviso vermelho;
+// a palavra "Snapshots" não aparece em nenhum texto visível.
+test('Régua do Coordenador: aviso de estoque insuficiente; sem a palavra snapshots', () => {
+  const separar = lerComponente('CoordinatorSepararView.tsx');
+  assert.ok(separar.includes('Estoque insuficiente'), 'Aviso "Estoque insuficiente" ausente na régua.');
+  const historicoCoord = lerComponente('CoordinatorHistoricoView.tsx');
+  const historicoEstoque = lerComponente('EstoqueHistoricoView.tsx');
+  for (const [nome, texto] of [['CoordinatorHistoricoView', historicoCoord], ['EstoqueHistoricoView', historicoEstoque]] as const) {
+    assert.ok(!/snapshot/i.test(texto), `A palavra "snapshot" apareceu em texto visível em ${nome}.`);
+  }
 });

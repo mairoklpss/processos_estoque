@@ -212,7 +212,7 @@ export function EstoqueFilaView({ onNotify, onEntregaConfirmada }: EstoqueFilaVi
                     <th className="py-2.5 px-3">Material</th>
                     <th className="py-2.5 px-3">Unidade</th>
                     <th className="py-2.5 px-3 text-right">Qtd. solicitada</th>
-                    <th className="py-2.5 px-3 text-right">Qtd. disponível p/ separar</th>
+                    <th className="py-2.5 px-3 text-right">Qtd. disponível no estoque</th>
                     <th className="py-2.5 px-4 text-right">Qtd. efetivamente entregue</th>
                   </tr>
                 </thead>
@@ -237,11 +237,11 @@ export function EstoqueFilaView({ onNotify, onEntregaConfirmada }: EstoqueFilaVi
                       </td>
                       <td className="py-3 px-3 font-medium text-slate-900">{item.nome}</td>
                       <td className="py-3 px-3 text-slate-600">{item.unidade}</td>
-                      <td className="py-3 px-3 text-right font-mono tabular-nums text-slate-800">
+                      <td className="py-3 px-3 text-right font-mono tabular-nums font-bold text-[#0F4C81]">
                         {item.quantidadeSolicitada}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono tabular-nums font-bold text-[#0F4C81]">
-                        {item.quantidadeASeparar}
+                      <td className="py-3 px-3 text-right font-mono tabular-nums text-slate-800">
+                        {item.estoqueDisponivel}
                       </td>
                       <td className="py-3 px-4 text-right">
                         {isCalculada ? (

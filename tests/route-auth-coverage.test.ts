@@ -43,6 +43,7 @@ const COBERTURA: Record<string, string> = {
   '/api/coord/pendencias': 'tests/fluxo-api.test.ts',
   '/api/coord/auditoria': 'tests/fluxo-api.test.ts e tests/security-regression.test.ts',
   '/api/estoque/fila': 'tests/fluxo-api.test.ts e tests/stock-safety.test.ts',
+  '/api/estoque/separacoes': 'tests/estoque-historico.test.ts (histórico do estoque, sem rascunhos, só leitura)',
   '/api/estoque/fila/:id': 'tests/stock-safety.test.ts',
   '/api/estoque/fila/:id/confirmar': 'tests/fluxo-api.test.ts e tests/stock-safety.test.ts',
   '/api/estoque/fila/:id/csv': 'tests/fluxo-api.test.ts',
