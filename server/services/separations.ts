@@ -198,6 +198,24 @@ export async function ajustarItemRascunho(db: AsyncDatabase, user: SessionUser, 
     return await obterSeparacaoCoordenador(db, separacaoId);
 }
 
+// Issue 11: exclusão de rascunho pelo coordenador (evita acumular rascunhos obsoletos).
+// Só RASCUNHO pode ser apagado; CALCULADA/SEPARADA ficam preservadas (histórico/fila).
+export async function excluirRascunho(db: AsyncDatabase, user: SessionUser, separacaoId: number): Promise<void> {
+    await db.transaction(async (db) => {
+        const sep = await db.lock('SELECT id, status FROM separacoes WHERE id = ?', separacaoId) as {
+            id: number;
+            status: StatusSeparacao;
+        } | undefined;
+        if (!sep)
+            throw new AppError(404, 'Separação não encontrada.', 'NOT_FOUND');
+        if (sep.status !== 'RASCUNHO') {
+            throw new AppError(409, 'Apenas rascunhos podem ser excluídos. Separações enviadas ou entregues ficam preservadas.', 'DRAFT_ONLY');
+        }
+        await db.run('DELETE FROM separacao_itens WHERE separacao_id = ?', separacaoId);
+        await db.run('DELETE FROM separacoes WHERE id = ?', separacaoId);
+    });
+}
+
 export async function enviarSolicitacaoEstoque(db: AsyncDatabase, user: SessionUser, separacaoId: number): Promise<SeparacaoCoordenadorDTO> {
     const tx = await db.transaction(async (db) => {
         const sep = await db.lock('SELECT id, status FROM separacoes WHERE id = ?', separacaoId) as {

@@ -36,7 +36,7 @@ const COBERTURA: Record<string, string> = {
   '/api/coord/usuarios/:id/reset-password': 'tests/security-regression.test.ts',
   '/api/coord/separacoes/calcular': 'tests/fluxo-api.test.ts e tests/regras.test.ts',
   '/api/coord/separacoes': 'tests/fluxo-api.test.ts',
-  '/api/coord/separacoes/:id': 'tests/fluxo-api.test.ts',
+  '/api/coord/separacoes/:id': 'tests/fluxo-api.test.ts e tests/rascunho-exclusao.test.ts (DELETE só rascunho, só coordenador)',
   '/api/coord/separacoes/:id/itens/:sepItemId': 'tests/fluxo-api.test.ts e tests/stock-safety.test.ts',
   '/api/coord/separacoes/:id/enviar': 'tests/fluxo-api.test.ts',
   '/api/coord/separacoes/:id/csv': 'tests/fluxo-api.test.ts',

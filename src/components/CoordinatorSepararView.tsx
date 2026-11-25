@@ -7,6 +7,7 @@ import {
   Info,
   Printer,
   Send,
+  Trash2,
   X,
 } from 'lucide-react';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
@@ -54,6 +55,7 @@ export function CoordinatorSepararView({
 
   // Envio ao estoque
   const [confirmandoEnvio, setConfirmandoEnvio] = useState(false);
+  const [confirmandoExclusao, setConfirmandoExclusao] = useState(false);
   const [enviando, setEnviando] = useState(false);
 
   async function loadBase() {
@@ -189,6 +191,25 @@ export function CoordinatorSepararView({
       onRefreshSummary();
     } catch (err) {
       onNotify(err instanceof ApiError ? err.message : 'Erro ao enviar solicitação.', 'error');
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  // Issue 11: exclusão do rascunho retomado (evita acumular rascunhos obsoletos).
+  async function handleExcluirRascunho() {
+    if (!separacao) return;
+    setEnviando(true);
+    try {
+      await api.excluirRascunho(separacao.id);
+      onNotify(`Rascunho ${separacao.codigo} excluído.`);
+      setConfirmandoExclusao(false);
+      const drafts = await api.listarSeparacoes({ status: 'RASCUNHO' });
+      setRascunhos(drafts);
+      onSelectSeparacaoId(null);
+      onRefreshSummary();
+    } catch (err) {
+      onNotify(err instanceof ApiError ? err.message : 'Erro ao excluir rascunho.', 'error');
     } finally {
       setEnviando(false);
     }
@@ -366,6 +387,18 @@ export function CoordinatorSepararView({
                 {separacao.status === 'RASCUNHO' && !confirmandoEnvio && (
                   <button
                     type="button"
+                    onClick={() => setConfirmandoExclusao(true)}
+                    title="Apaga este rascunho para não acumular rascunhos antigos."
+                    className="h-9 px-3.5 inline-flex items-center gap-1.5 text-xs font-semibold text-red-800 bg-white border border-red-300 hover:bg-red-50 rounded-md whitespace-nowrap cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                    <span>Excluir rascunho</span>
+                  </button>
+                )}
+
+                {separacao.status === 'RASCUNHO' && !confirmandoEnvio && (
+                  <button
+                    type="button"
                     onClick={() => setConfirmandoEnvio(true)}
                     className="h-9 px-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#0F4C81] hover:bg-[#0C3D68] rounded-md whitespace-nowrap cursor-pointer"
                   >
@@ -398,6 +431,33 @@ export function CoordinatorSepararView({
                     className="h-8 px-3.5 text-xs font-semibold text-white bg-[#0F4C81] hover:bg-[#0C3D68] rounded cursor-pointer disabled:opacity-60"
                   >
                     {enviando ? 'Enviando...' : 'Confirmar envio ao estoque'}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Confirmação explícita de exclusão do rascunho (issue 11) */}
+            {separacao.status === 'RASCUNHO' && confirmandoExclusao && (
+              <div className="px-5 py-3.5 bg-red-50 border-b border-red-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-xs text-red-950 font-medium">
+                  O rascunho <strong>{separacao.codigo}</strong> e seus itens serão apagados definitivamente (itens sem entrega; estoque não é alterado). Confirmar exclusão?
+                </p>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setConfirmandoExclusao(false)}
+                    disabled={enviando}
+                    className="h-8 px-3 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleExcluirRascunho}
+                    disabled={enviando}
+                    className="h-8 px-3.5 text-xs font-semibold text-white bg-red-700 hover:bg-red-800 rounded cursor-pointer disabled:opacity-60"
+                  >
+                    {enviando ? 'Excluindo...' : 'Confirmar exclusão do rascunho'}
                   </button>
                 </div>
               </div>

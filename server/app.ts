@@ -6,7 +6,7 @@ import express, { type NextFunction, type Request, type Response } from 'express
 import type { PerfilUsuario, StatusSeparacao } from '../src/shared/types.ts';
 import type { DBInstance } from './db.ts';
 import { adaptSqlite, type AsyncDatabase } from './data-access.ts';
-import { AMBIENTE_LABEL, AppError, ajustarItemRascunho, atualizarItem, atualizarTecnico, atualizarUsuario, calcularSeparacaoRascunho, confirmarEntregaEstoque, criarItem, criarTecnico, criarUsuario, definirMinimoManual, enviarSolicitacaoEstoque, gerarCsvSeparacaoSimples, getDashboardSummary, getUsuarioBySession, listarFilaEstoque, listarItens, listarParametrosTecnico, listarPendencias, listarSeparacoesCoordenador, listarTecnicos, listarUsuarios, loginUsuario, logoutSessao, obterDetalheEstoque, obterSeparacaoCoordenador, redefinirSenhaUsuario, type SessionUser, } from './services.ts';
+import { AMBIENTE_LABEL, AppError, ajustarItemRascunho, atualizarItem, atualizarTecnico, atualizarUsuario, calcularSeparacaoRascunho, confirmarEntregaEstoque, criarItem, criarTecnico, criarUsuario, definirMinimoManual, enviarSolicitacaoEstoque, gerarCsvSeparacaoSimples, getDashboardSummary, getUsuarioBySession, listarFilaEstoque, listarItens, listarParametrosTecnico, listarPendencias, listarSeparacoesCoordenador, listarTecnicos, listarUsuarios, loginUsuario, logoutSessao, obterDetalheEstoque, obterSeparacaoCoordenador, excluirRascunho, redefinirSenhaUsuario, type SessionUser, } from './services.ts';
 import { buscarTecnicosIxc, buscarItensIxc } from './ixc.ts';
 const instance = process.env.APP_INSTANCE ?? 'operacao';
 if (!['operacao', 'homologacao', 'smoke'].includes(instance)) throw new Error('APP_INSTANCE inválida.');
@@ -420,6 +420,15 @@ export function createApp(connection: DBInstance | AsyncDatabase, options?: {
         try {
             const sep = await ajustarItemRascunho(db, req.user!, Number(req.params.id), Number(req.params.sepItemId), Number(req.body?.quantidadeSolicitada), String(req.body?.justificativa ?? ''));
             res.json(sep);
+        }
+        catch (err) {
+            next(err);
+        }
+    });
+    app.delete('/api/coord/separacoes/:id', requireAuth, requireRole('COORDENADOR'), async (req: AuthenticatedRequest, res, next) => {
+        try {
+            await excluirRascunho(db, req.user!, Number(req.params.id));
+            res.json({ ok: true });
         }
         catch (err) {
             next(err);

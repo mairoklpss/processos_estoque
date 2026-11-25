@@ -238,6 +238,8 @@ export const api = {
     }),
   enviarSolicitacao: (separacaoId: number) =>
     request<SeparacaoCoordenadorDTO>(`/api/coord/separacoes/${separacaoId}/enviar`, { method: 'POST' }),
+  excluirRascunho: (separacaoId: number) =>
+    request<{ ok: boolean }>(`/api/coord/separacoes/${separacaoId}`, { method: 'DELETE' }),
   listarPendenciasCoord: () => requestAllPages<PendenciaDTO>('/api/coord/pendencias'),
 
   // Estoque
