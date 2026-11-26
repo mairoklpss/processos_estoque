@@ -162,6 +162,29 @@ test('Régua: demanda semanal (uso ÷ 3,1428) comparada com os limites semanais 
   assert.equal(acima.comparacaoLimites, 'ACIMA_MAXIMO');
   assert.equal(acima.consumoAtipico, true);
   assert.equal(acima.semSaldoAlmoxarifado, true);
+
+  // A régua compara o número ARREDONDADO que a tela mostra (pedido da pessoa):
+  // uso 30 → demanda crua 9.5456, arredondada = 10 = mínimo → dentro (não 'abaixo')
+  const empataMinimo = calcularPropostaItem({
+    usoMesAnterior: 30,
+    minimoManual: 10,
+    limiteMaximo: 30,
+    saldoTecnico: 0,
+    estoqueAtual: 20,
+  });
+  assert.equal(empataMinimo.comparacaoLimites, 'DENTRO_LIMITES');
+  assert.equal(empataMinimo.consumoAtipico, false);
+
+  // uso 95 → demanda crua 30.2276, arredondada = 30 = máximo → dentro (não 'acima')
+  const empataMaximo = calcularPropostaItem({
+    usoMesAnterior: 95,
+    minimoManual: 10,
+    limiteMaximo: 30,
+    saldoTecnico: 0,
+    estoqueAtual: 20,
+  });
+  assert.equal(empataMaximo.comparacaoLimites, 'DENTRO_LIMITES');
+  assert.equal(empataMaximo.consumoAtipico, false);
 });
 
 

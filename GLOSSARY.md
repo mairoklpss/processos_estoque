@@ -33,5 +33,5 @@ Valor derivado do consumo semanal (uso do mês ÷ 3,1428, teto) ou override manu
 _Avoid_: alvo de reposição, mínimo obrigatório
 
 **Régua (alertas)**:
-Comparação da demanda semanal (uso do mês fechado ÷ 3,1428) com os limites semanais (mínimo efetivo e máximo global) — responde "o consumo médio por semana cabe no que o inventário da semana permite?". Acima do máximo = consumo semanal atípico; entre mínimo e máximo = dentro dos limites; abaixo do mínimo = consumo baixo.
+Comparação da demanda semanal arredondada (o número inteiro exibido na tela, derivado do uso do mês fechado ÷ 3,1428) com os limites semanais (mínimo efetivo e máximo global) — responde "o consumo médio por semana cabe no que o inventário da semana permite?". Acima do máximo = consumo semanal atípico; entre mínimo e máximo = dentro dos limites; abaixo do mínimo = consumo baixo. A comparação usa o valor arredondado para o alerta bater com a leitura visual (demanda exibida 10 e mínimo 10 = dentro).
 _Avoid_: comparar uso mensal com os limites semanais
